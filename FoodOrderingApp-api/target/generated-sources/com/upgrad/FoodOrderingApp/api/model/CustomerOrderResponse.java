@@ -1,32 +1,34 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.upgrad.FoodOrderingApp.api.model.OrderList;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * CustomerOrderResponse
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.948+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.805087+05:30[Asia/Kolkata]")
+public class CustomerOrderResponse {
 
-
-
-public class CustomerOrderResponse   {
-  @JsonProperty("orders")
   @Valid
-  private List<OrderList> orders = null;
+  private List<@Valid OrderList> orders;
 
-  public CustomerOrderResponse orders(List<OrderList> orders) {
+  public CustomerOrderResponse orders(List<@Valid OrderList> orders) {
     this.orders = orders;
     return this;
   }
@@ -42,22 +44,20 @@ public class CustomerOrderResponse   {
   /**
    * List of orders
    * @return orders
-  **/
-  @ApiModelProperty(value = "List of orders")
-
-  @Valid
-
-  public List<OrderList> getOrders() {
+  */
+  @Valid 
+  @Schema(name = "orders", description = "List of orders", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("orders")
+  public List<@Valid OrderList> getOrders() {
     return orders;
   }
 
-  public void setOrders(List<OrderList> orders) {
+  public void setOrders(List<@Valid OrderList> orders) {
     this.orders = orders;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -77,7 +77,6 @@ public class CustomerOrderResponse   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CustomerOrderResponse {\n");
-    
     sb.append("    orders: ").append(toIndentedString(orders)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -87,7 +86,7 @@ public class CustomerOrderResponse   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

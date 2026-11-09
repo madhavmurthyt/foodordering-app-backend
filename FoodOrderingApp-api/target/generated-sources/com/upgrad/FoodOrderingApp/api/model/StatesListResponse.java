@@ -1,32 +1,34 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.upgrad.FoodOrderingApp.api.model.StatesList;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * StatesListResponse
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.990+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.864512+05:30[Asia/Kolkata]")
+public class StatesListResponse {
 
-
-
-public class StatesListResponse   {
-  @JsonProperty("states")
   @Valid
-  private List<StatesList> states = null;
+  private List<@Valid StatesList> states;
 
-  public StatesListResponse states(List<StatesList> states) {
+  public StatesListResponse states(List<@Valid StatesList> states) {
     this.states = states;
     return this;
   }
@@ -42,22 +44,20 @@ public class StatesListResponse   {
   /**
    * List of states
    * @return states
-  **/
-  @ApiModelProperty(value = "List of states")
-
-  @Valid
-
-  public List<StatesList> getStates() {
+  */
+  @Valid 
+  @Schema(name = "states", description = "List of states", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("states")
+  public List<@Valid StatesList> getStates() {
     return states;
   }
 
-  public void setStates(List<StatesList> states) {
+  public void setStates(List<@Valid StatesList> states) {
     this.states = states;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -77,7 +77,6 @@ public class StatesListResponse   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class StatesListResponse {\n");
-    
     sb.append("    states: ").append(toIndentedString(states)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -87,7 +86,7 @@ public class StatesListResponse   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

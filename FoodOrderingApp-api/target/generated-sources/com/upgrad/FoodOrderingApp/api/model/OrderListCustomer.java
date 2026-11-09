@@ -1,39 +1,38 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.UUID;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * OrderListCustomer
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.948+05:30")
 
+@JsonTypeName("OrderList_customer")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.805087+05:30[Asia/Kolkata]")
+public class OrderListCustomer {
 
+  private UUID id;
 
+  private String firstName;
 
-public class OrderListCustomer   {
-  @JsonProperty("id")
-  private UUID id = null;
+  private String lastName;
 
-  @JsonProperty("first_name")
-  private String firstName = null;
+  private String emailAddress;
 
-  @JsonProperty("last_name")
-  private String lastName = null;
-
-  @JsonProperty("email_address")
-  private String emailAddress = null;
-
-  @JsonProperty("contact_number")
-  private String contactNumber = null;
+  private String contactNumber;
 
   public OrderListCustomer id(UUID id) {
     this.id = id;
@@ -43,11 +42,10 @@ public class OrderListCustomer   {
   /**
    * Unique identifier of the customer in a standard UUID format
    * @return id
-  **/
-  @ApiModelProperty(value = "Unique identifier of the customer in a standard UUID format")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "id", description = "Unique identifier of the customer in a standard UUID format", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("id")
   public UUID getId() {
     return id;
   }
@@ -64,10 +62,10 @@ public class OrderListCustomer   {
   /**
    * First name of the new customer
    * @return firstName
-  **/
-  @ApiModelProperty(value = "First name of the new customer")
-
-
+  */
+  
+  @Schema(name = "first_name", description = "First name of the new customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("first_name")
   public String getFirstName() {
     return firstName;
   }
@@ -84,10 +82,10 @@ public class OrderListCustomer   {
   /**
    * Last name of the new customer
    * @return lastName
-  **/
-  @ApiModelProperty(value = "Last name of the new customer")
-
-
+  */
+  
+  @Schema(name = "last_name", description = "Last name of the new customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("last_name")
   public String getLastName() {
     return lastName;
   }
@@ -104,10 +102,10 @@ public class OrderListCustomer   {
   /**
    * Email address of the new customer
    * @return emailAddress
-  **/
-  @ApiModelProperty(value = "Email address of the new customer")
-
-
+  */
+  
+  @Schema(name = "email_address", description = "Email address of the new customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("email_address")
   public String getEmailAddress() {
     return emailAddress;
   }
@@ -124,10 +122,10 @@ public class OrderListCustomer   {
   /**
    * Contact Number of the new customer
    * @return contactNumber
-  **/
-  @ApiModelProperty(value = "Contact Number of the new customer")
-
-
+  */
+  
+  @Schema(name = "contact_number", description = "Contact Number of the new customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("contact_number")
   public String getContactNumber() {
     return contactNumber;
   }
@@ -136,9 +134,8 @@ public class OrderListCustomer   {
     this.contactNumber = contactNumber;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -162,7 +159,6 @@ public class OrderListCustomer   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OrderListCustomer {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
@@ -176,7 +172,7 @@ public class OrderListCustomer   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

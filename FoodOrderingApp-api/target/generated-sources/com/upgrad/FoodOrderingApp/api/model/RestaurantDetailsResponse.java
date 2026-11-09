@@ -1,55 +1,50 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.upgrad.FoodOrderingApp.api.model.CategoryList;
 import com.upgrad.FoodOrderingApp.api.model.RestaurantDetailsResponseAddress;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * Restaurant details
  */
-@ApiModel(description = "Restaurant details")
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.908+05:30")
 
+@Schema(name = "RestaurantDetailsResponse", description = "Restaurant details")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.734447+05:30[Asia/Kolkata]")
+public class RestaurantDetailsResponse {
 
+  private UUID id;
 
+  private String restaurantName;
 
-public class RestaurantDetailsResponse   {
-  @JsonProperty("id")
-  private UUID id = null;
+  private String photoURL;
 
-  @JsonProperty("restaurant_name")
-  private String restaurantName = null;
+  private BigDecimal customerRating;
 
-  @JsonProperty("photo_URL")
-  private String photoURL = null;
+  private Integer averagePrice;
 
-  @JsonProperty("customer_rating")
-  private BigDecimal customerRating = null;
+  private Integer numberCustomersRated;
 
-  @JsonProperty("average_price")
-  private Integer averagePrice = null;
+  private RestaurantDetailsResponseAddress address;
 
-  @JsonProperty("number_customers_rated")
-  private Integer numberCustomersRated = null;
-
-  @JsonProperty("address")
-  private RestaurantDetailsResponseAddress address = null;
-
-  @JsonProperty("categories")
   @Valid
-  private List<CategoryList> categories = null;
+  private List<@Valid CategoryList> categories;
 
   public RestaurantDetailsResponse id(UUID id) {
     this.id = id;
@@ -59,11 +54,10 @@ public class RestaurantDetailsResponse   {
   /**
    * Unique identifier of the restaurant in a standard UUID format
    * @return id
-  **/
-  @ApiModelProperty(value = "Unique identifier of the restaurant in a standard UUID format")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "id", description = "Unique identifier of the restaurant in a standard UUID format", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("id")
   public UUID getId() {
     return id;
   }
@@ -80,10 +74,10 @@ public class RestaurantDetailsResponse   {
   /**
    * Name of the restaurant
    * @return restaurantName
-  **/
-  @ApiModelProperty(value = "Name of the restaurant")
-
-
+  */
+  
+  @Schema(name = "restaurant_name", description = "Name of the restaurant", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("restaurant_name")
   public String getRestaurantName() {
     return restaurantName;
   }
@@ -100,10 +94,10 @@ public class RestaurantDetailsResponse   {
   /**
    * URL for the picture of the restaurant
    * @return photoURL
-  **/
-  @ApiModelProperty(value = "URL for the picture of the restaurant")
-
-
+  */
+  
+  @Schema(name = "photo_URL", description = "URL for the picture of the restaurant", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("photo_URL")
   public String getPhotoURL() {
     return photoURL;
   }
@@ -120,11 +114,10 @@ public class RestaurantDetailsResponse   {
   /**
    * Rating of the restaurant
    * @return customerRating
-  **/
-  @ApiModelProperty(value = "Rating of the restaurant")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "customer_rating", description = "Rating of the restaurant", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("customer_rating")
   public BigDecimal getCustomerRating() {
     return customerRating;
   }
@@ -141,10 +134,10 @@ public class RestaurantDetailsResponse   {
   /**
    * Average price for two people
    * @return averagePrice
-  **/
-  @ApiModelProperty(value = "Average price for two people")
-
-
+  */
+  
+  @Schema(name = "average_price", description = "Average price for two people", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("average_price")
   public Integer getAveragePrice() {
     return averagePrice;
   }
@@ -161,10 +154,10 @@ public class RestaurantDetailsResponse   {
   /**
    * Number of customers rated the restaurant
    * @return numberCustomersRated
-  **/
-  @ApiModelProperty(value = "Number of customers rated the restaurant")
-
-
+  */
+  
+  @Schema(name = "number_customers_rated", description = "Number of customers rated the restaurant", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("number_customers_rated")
   public Integer getNumberCustomersRated() {
     return numberCustomersRated;
   }
@@ -181,11 +174,10 @@ public class RestaurantDetailsResponse   {
   /**
    * Get address
    * @return address
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "address", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("address")
   public RestaurantDetailsResponseAddress getAddress() {
     return address;
   }
@@ -194,7 +186,7 @@ public class RestaurantDetailsResponse   {
     this.address = address;
   }
 
-  public RestaurantDetailsResponse categories(List<CategoryList> categories) {
+  public RestaurantDetailsResponse categories(List<@Valid CategoryList> categories) {
     this.categories = categories;
     return this;
   }
@@ -210,22 +202,20 @@ public class RestaurantDetailsResponse   {
   /**
    * List of categories
    * @return categories
-  **/
-  @ApiModelProperty(value = "List of categories")
-
-  @Valid
-
-  public List<CategoryList> getCategories() {
+  */
+  @Valid 
+  @Schema(name = "categories", description = "List of categories", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("categories")
+  public List<@Valid CategoryList> getCategories() {
     return categories;
   }
 
-  public void setCategories(List<CategoryList> categories) {
+  public void setCategories(List<@Valid CategoryList> categories) {
     this.categories = categories;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -252,7 +242,6 @@ public class RestaurantDetailsResponse   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class RestaurantDetailsResponse {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    restaurantName: ").append(toIndentedString(restaurantName)).append("\n");
     sb.append("    photoURL: ").append(toIndentedString(photoURL)).append("\n");
@@ -269,7 +258,7 @@ public class RestaurantDetailsResponse   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

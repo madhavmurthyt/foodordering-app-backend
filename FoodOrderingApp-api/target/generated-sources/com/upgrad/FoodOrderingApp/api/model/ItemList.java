@@ -1,34 +1,33 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.UUID;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * ItemList
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:45.030+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.932796+05:30[Asia/Kolkata]")
+public class ItemList {
 
+  private UUID id;
 
+  private String itemName;
 
-public class ItemList   {
-  @JsonProperty("id")
-  private UUID id = null;
-
-  @JsonProperty("item_name")
-  private String itemName = null;
-
-  @JsonProperty("price")
-  private Integer price = null;
+  private Integer price;
 
   /**
    * Gets or Sets itemType
@@ -44,25 +43,28 @@ public class ItemList   {
       this.value = value;
     }
 
-    @Override
     @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
     public String toString() {
       return String.valueOf(value);
     }
 
     @JsonCreator
-    public static ItemTypeEnum fromValue(String text) {
+    public static ItemTypeEnum fromValue(String value) {
       for (ItemTypeEnum b : ItemTypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(value)) {
           return b;
         }
       }
-      return null;
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
   }
 
-  @JsonProperty("item_type")
-  private ItemTypeEnum itemType = null;
+  private ItemTypeEnum itemType;
 
   public ItemList id(UUID id) {
     this.id = id;
@@ -72,11 +74,10 @@ public class ItemList   {
   /**
    * Unique identifier of the item in a standard UUID format
    * @return id
-  **/
-  @ApiModelProperty(value = "Unique identifier of the item in a standard UUID format")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "id", description = "Unique identifier of the item in a standard UUID format", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("id")
   public UUID getId() {
     return id;
   }
@@ -93,10 +94,10 @@ public class ItemList   {
   /**
    * Name of the item
    * @return itemName
-  **/
-  @ApiModelProperty(value = "Name of the item")
-
-
+  */
+  
+  @Schema(name = "item_name", description = "Name of the item", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("item_name")
   public String getItemName() {
     return itemName;
   }
@@ -113,10 +114,10 @@ public class ItemList   {
   /**
    * Price of the item
    * @return price
-  **/
-  @ApiModelProperty(value = "Price of the item")
-
-
+  */
+  
+  @Schema(name = "price", description = "Price of the item", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("price")
   public Integer getPrice() {
     return price;
   }
@@ -133,10 +134,10 @@ public class ItemList   {
   /**
    * Get itemType
    * @return itemType
-  **/
-  @ApiModelProperty(value = "")
-
-
+  */
+  
+  @Schema(name = "item_type", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("item_type")
   public ItemTypeEnum getItemType() {
     return itemType;
   }
@@ -145,9 +146,8 @@ public class ItemList   {
     this.itemType = itemType;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -170,7 +170,6 @@ public class ItemList   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ItemList {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    itemName: ").append(toIndentedString(itemName)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
@@ -183,7 +182,7 @@ public class ItemList   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

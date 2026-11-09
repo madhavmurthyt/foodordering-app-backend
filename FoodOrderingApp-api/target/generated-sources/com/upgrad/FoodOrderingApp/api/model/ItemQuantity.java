@@ -1,33 +1,32 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.UUID;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * ItemQuantity
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.948+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.805087+05:30[Asia/Kolkata]")
+public class ItemQuantity {
 
+  private UUID itemId;
 
+  private Integer quantity;
 
-public class ItemQuantity   {
-  @JsonProperty("item_id")
-  private UUID itemId = null;
-
-  @JsonProperty("quantity")
-  private Integer quantity = null;
-
-  @JsonProperty("price")
-  private Integer price = null;
+  private Integer price;
 
   public ItemQuantity itemId(UUID itemId) {
     this.itemId = itemId;
@@ -37,11 +36,10 @@ public class ItemQuantity   {
   /**
    * Unique identifier of the item in a standard UUID format
    * @return itemId
-  **/
-  @ApiModelProperty(value = "Unique identifier of the item in a standard UUID format")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "item_id", description = "Unique identifier of the item in a standard UUID format", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("item_id")
   public UUID getItemId() {
     return itemId;
   }
@@ -58,10 +56,10 @@ public class ItemQuantity   {
   /**
    * Quantity of item ordered
    * @return quantity
-  **/
-  @ApiModelProperty(value = "Quantity of item ordered")
-
-
+  */
+  
+  @Schema(name = "quantity", description = "Quantity of item ordered", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
   }
@@ -78,10 +76,10 @@ public class ItemQuantity   {
   /**
    * Total price of the item
    * @return price
-  **/
-  @ApiModelProperty(value = "Total price of the item")
-
-
+  */
+  
+  @Schema(name = "price", description = "Total price of the item", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("price")
   public Integer getPrice() {
     return price;
   }
@@ -90,9 +88,8 @@ public class ItemQuantity   {
     this.price = price;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -114,7 +111,6 @@ public class ItemQuantity   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ItemQuantity {\n");
-    
     sb.append("    itemId: ").append(toIndentedString(itemId)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
@@ -126,7 +122,7 @@ public class ItemQuantity   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

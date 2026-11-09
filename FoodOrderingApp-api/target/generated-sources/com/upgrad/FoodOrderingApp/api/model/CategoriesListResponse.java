@@ -1,32 +1,34 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.upgrad.FoodOrderingApp.api.model.CategoryListResponse;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * CategoriesListResponse
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:45.014+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.904725+05:30[Asia/Kolkata]")
+public class CategoriesListResponse {
 
-
-
-public class CategoriesListResponse   {
-  @JsonProperty("categories")
   @Valid
-  private List<CategoryListResponse> categories = null;
+  private List<@Valid CategoryListResponse> categories;
 
-  public CategoriesListResponse categories(List<CategoryListResponse> categories) {
+  public CategoriesListResponse categories(List<@Valid CategoryListResponse> categories) {
     this.categories = categories;
     return this;
   }
@@ -42,22 +44,20 @@ public class CategoriesListResponse   {
   /**
    * List of categories
    * @return categories
-  **/
-  @ApiModelProperty(value = "List of categories")
-
-  @Valid
-
-  public List<CategoryListResponse> getCategories() {
+  */
+  @Valid 
+  @Schema(name = "categories", description = "List of categories", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("categories")
+  public List<@Valid CategoryListResponse> getCategories() {
     return categories;
   }
 
-  public void setCategories(List<CategoryListResponse> categories) {
+  public void setCategories(List<@Valid CategoryListResponse> categories) {
     this.categories = categories;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -77,7 +77,6 @@ public class CategoriesListResponse   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CategoriesListResponse {\n");
-    
     sb.append("    categories: ").append(toIndentedString(categories)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -87,7 +86,7 @@ public class CategoriesListResponse   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

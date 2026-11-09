@@ -1,30 +1,30 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.UUID;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * PaymentResponse
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:45.043+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.954403+05:30[Asia/Kolkata]")
+public class PaymentResponse {
 
+  private UUID id;
 
-
-public class PaymentResponse   {
-  @JsonProperty("id")
-  private UUID id = null;
-
-  @JsonProperty("payment_name")
-  private String paymentName = null;
+  private String paymentName;
 
   public PaymentResponse id(UUID id) {
     this.id = id;
@@ -34,11 +34,10 @@ public class PaymentResponse   {
   /**
    * Unique identifier of the payment method in a standard UUID format
    * @return id
-  **/
-  @ApiModelProperty(value = "Unique identifier of the payment method in a standard UUID format")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "id", description = "Unique identifier of the payment method in a standard UUID format", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("id")
   public UUID getId() {
     return id;
   }
@@ -55,10 +54,10 @@ public class PaymentResponse   {
   /**
    * Name of the payment method
    * @return paymentName
-  **/
-  @ApiModelProperty(value = "Name of the payment method")
-
-
+  */
+  
+  @Schema(name = "payment_name", description = "Name of the payment method", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("payment_name")
   public String getPaymentName() {
     return paymentName;
   }
@@ -67,9 +66,8 @@ public class PaymentResponse   {
     this.paymentName = paymentName;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -90,7 +88,6 @@ public class PaymentResponse   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class PaymentResponse {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    paymentName: ").append(toIndentedString(paymentName)).append("\n");
     sb.append("}");
@@ -101,7 +98,7 @@ public class PaymentResponse   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

@@ -1,35 +1,46 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * UpdateCustomerResponse
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.830+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.610447+05:30[Asia/Kolkata]")
+public class UpdateCustomerResponse {
 
+  private String id;
 
+  private String status;
 
-public class UpdateCustomerResponse   {
-  @JsonProperty("id")
-  private String id = null;
+  private String firstName;
 
-  @JsonProperty("status")
-  private String status = null;
+  private String lastName;
 
-  @JsonProperty("first_name")
-  private String firstName = null;
+  public UpdateCustomerResponse() {
+    super();
+  }
 
-  @JsonProperty("last_name")
-  private String lastName = null;
+  /**
+   * Constructor with only required parameters
+   */
+  public UpdateCustomerResponse(String id, String status, String firstName) {
+    this.id = id;
+    this.status = status;
+    this.firstName = firstName;
+  }
 
   public UpdateCustomerResponse id(String id) {
     this.id = id;
@@ -39,11 +50,10 @@ public class UpdateCustomerResponse   {
   /**
    * uuid of the customer with updated details
    * @return id
-  **/
-  @ApiModelProperty(required = true, value = "uuid of the customer with updated details")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "id", description = "uuid of the customer with updated details", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("id")
   public String getId() {
     return id;
   }
@@ -60,11 +70,10 @@ public class UpdateCustomerResponse   {
   /**
    * message showing the status of the customer
    * @return status
-  **/
-  @ApiModelProperty(required = true, value = "message showing the status of the customer")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "status", description = "message showing the status of the customer", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("status")
   public String getStatus() {
     return status;
   }
@@ -81,11 +90,10 @@ public class UpdateCustomerResponse   {
   /**
    * First name of the new customer
    * @return firstName
-  **/
-  @ApiModelProperty(required = true, value = "First name of the new customer")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "first_name", description = "First name of the new customer", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("first_name")
   public String getFirstName() {
     return firstName;
   }
@@ -102,10 +110,10 @@ public class UpdateCustomerResponse   {
   /**
    * Last name of the new customer
    * @return lastName
-  **/
-  @ApiModelProperty(value = "Last name of the new customer")
-
-
+  */
+  
+  @Schema(name = "last_name", description = "Last name of the new customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("last_name")
   public String getLastName() {
     return lastName;
   }
@@ -114,9 +122,8 @@ public class UpdateCustomerResponse   {
     this.lastName = lastName;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -139,7 +146,6 @@ public class UpdateCustomerResponse   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class UpdateCustomerResponse {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
@@ -152,7 +158,7 @@ public class UpdateCustomerResponse   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

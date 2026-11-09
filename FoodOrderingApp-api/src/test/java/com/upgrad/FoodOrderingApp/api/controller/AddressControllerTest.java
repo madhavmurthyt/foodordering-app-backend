@@ -13,21 +13,21 @@ import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AddressNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SaveAddressException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 // This class contains all the test cases regarding the address controller
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AddressControllerTest {
@@ -64,7 +64,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(post("/address?content=my_address")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2")
                 .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"\", \"state_uuid\":\"testUUID\"}"))
             .andExpect(status().isCreated())
@@ -83,7 +83,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(post("/address?content=my_address")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer non_existing_access_token"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-001"));
@@ -100,7 +100,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(post("/address?content=my_address")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-002"));
@@ -118,7 +118,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(post("/address?content=my_address")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken1"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-003"));
@@ -135,7 +135,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(post("/address?content=my_address")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2")
                 .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"100000\", \"state_uuid\":\"testUUID\"}"))
             .andExpect(status().isNotFound())
@@ -154,7 +154,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(post("/address?content=my_address")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2")
                 .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"\", \"pincode\":\"123456\", \"state_uuid\":\"testUUID\"}"))
             .andExpect(status().isBadRequest())
@@ -173,7 +173,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(post("/address?content=my_address")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2")
                 .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"\", \"state_uuid\":\"testUUID\"}"))
             .andExpect(status().isBadRequest())
@@ -202,7 +202,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(delete("/address/82849cd5-106e-4b34-b9bf-94954c6ff527")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2")
                 .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"100000\", \"state_uuid\":\"c860e78a-a29b-11e8-9a3a-720006ceb890\"}"))
             .andExpect(status().isOk())
@@ -221,7 +221,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(delete("/address/address_id")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer non_existing_access_token"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-001"));
@@ -238,7 +238,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(delete("/address/address_id")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-002"));
@@ -255,7 +255,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(delete("/address/address_id")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken1"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-003"));
@@ -275,7 +275,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(delete("/address/82849cd5-106e-4b34-b9bf-94954c6ff527")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2")
                 .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"100000\", \"state_uuid\":\"c860e78a-a29b-11e8-9a3a-720006ceb890\"}"))
             .andExpect(status().isNotFound())
@@ -296,7 +296,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(delete("/address/82849cd5-106e-4b34-b9bf-94954c6ff527")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2")
                 .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"100000\", \"state_uuid\":\"c860e78a-a29b-11e8-9a3a-720006ceb890\"}"))
             .andExpect(status().isForbidden())
@@ -327,7 +327,7 @@ public class AddressControllerTest {
 
         final String response = mockMvc
             .perform(get("/address/customer")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2"))
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
@@ -356,7 +356,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(get("/address/customer")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer non_existing_access_token"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-001"));
@@ -373,7 +373,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(get("/address/customer")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-002"));
@@ -390,7 +390,7 @@ public class AddressControllerTest {
 
         mockMvc
             .perform(delete("/address/customer")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken1"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-003"));
@@ -408,7 +408,7 @@ public class AddressControllerTest {
         when(mockAddressService.getAllStates()).thenReturn(Collections.singletonList(stateEntity));
 
         final String response = mockMvc
-            .perform(get("/states").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .perform(get("/states").contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
 
@@ -426,7 +426,7 @@ public class AddressControllerTest {
         when(mockAddressService.getAllStates()).thenReturn(Collections.emptyList());
 
         final String response = mockMvc
-            .perform(get("/states").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .perform(get("/states").contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
 

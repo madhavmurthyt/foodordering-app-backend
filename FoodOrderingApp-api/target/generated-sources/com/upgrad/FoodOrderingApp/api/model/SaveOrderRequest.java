@@ -1,50 +1,60 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.upgrad.FoodOrderingApp.api.model.ItemQuantity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * SaveOrderRequest
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.948+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.805087+05:30[Asia/Kolkata]")
+public class SaveOrderRequest {
 
+  private String addressId;
 
+  private UUID paymentId;
 
-public class SaveOrderRequest   {
-  @JsonProperty("address_id")
-  private String addressId = null;
+  private BigDecimal bill;
 
-  @JsonProperty("payment_id")
-  private UUID paymentId = null;
+  private BigDecimal discount;
 
-  @JsonProperty("bill")
-  private BigDecimal bill = null;
+  private UUID couponId;
 
-  @JsonProperty("discount")
-  private BigDecimal discount = null;
+  private UUID restaurantId;
 
-  @JsonProperty("coupon_id")
-  private UUID couponId = null;
-
-  @JsonProperty("restaurant_id")
-  private UUID restaurantId = null;
-
-  @JsonProperty("item_quantities")
   @Valid
-  private List<ItemQuantity> itemQuantities = null;
+  private List<@Valid ItemQuantity> itemQuantities;
+
+  public SaveOrderRequest() {
+    super();
+  }
+
+  /**
+   * Constructor with only required parameters
+   */
+  public SaveOrderRequest(String addressId, UUID paymentId, BigDecimal bill, UUID restaurantId) {
+    this.addressId = addressId;
+    this.paymentId = paymentId;
+    this.bill = bill;
+    this.restaurantId = restaurantId;
+  }
 
   public SaveOrderRequest addressId(String addressId) {
     this.addressId = addressId;
@@ -54,11 +64,10 @@ public class SaveOrderRequest   {
   /**
    * uuid of the address
    * @return addressId
-  **/
-  @ApiModelProperty(required = true, value = "uuid of the address")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "address_id", description = "uuid of the address", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("address_id")
   public String getAddressId() {
     return addressId;
   }
@@ -75,12 +84,10 @@ public class SaveOrderRequest   {
   /**
    * uuid of the payment
    * @return paymentId
-  **/
-  @ApiModelProperty(required = true, value = "uuid of the payment")
-  @NotNull
-
-  @Valid
-
+  */
+  @NotNull @Valid 
+  @Schema(name = "payment_id", description = "uuid of the payment", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("payment_id")
   public UUID getPaymentId() {
     return paymentId;
   }
@@ -97,12 +104,10 @@ public class SaveOrderRequest   {
   /**
    * order bill
    * @return bill
-  **/
-  @ApiModelProperty(required = true, value = "order bill")
-  @NotNull
-
-  @Valid
-
+  */
+  @NotNull @Valid 
+  @Schema(name = "bill", description = "order bill", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("bill")
   public BigDecimal getBill() {
     return bill;
   }
@@ -119,11 +124,10 @@ public class SaveOrderRequest   {
   /**
    * order discount
    * @return discount
-  **/
-  @ApiModelProperty(value = "order discount")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "discount", description = "order discount", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("discount")
   public BigDecimal getDiscount() {
     return discount;
   }
@@ -140,11 +144,10 @@ public class SaveOrderRequest   {
   /**
    * uuid of the coupon
    * @return couponId
-  **/
-  @ApiModelProperty(value = "uuid of the coupon")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "coupon_id", description = "uuid of the coupon", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("coupon_id")
   public UUID getCouponId() {
     return couponId;
   }
@@ -161,12 +164,10 @@ public class SaveOrderRequest   {
   /**
    * uuid of the restaurant
    * @return restaurantId
-  **/
-  @ApiModelProperty(required = true, value = "uuid of the restaurant")
-  @NotNull
-
-  @Valid
-
+  */
+  @NotNull @Valid 
+  @Schema(name = "restaurant_id", description = "uuid of the restaurant", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("restaurant_id")
   public UUID getRestaurantId() {
     return restaurantId;
   }
@@ -175,7 +176,7 @@ public class SaveOrderRequest   {
     this.restaurantId = restaurantId;
   }
 
-  public SaveOrderRequest itemQuantities(List<ItemQuantity> itemQuantities) {
+  public SaveOrderRequest itemQuantities(List<@Valid ItemQuantity> itemQuantities) {
     this.itemQuantities = itemQuantities;
     return this;
   }
@@ -191,22 +192,20 @@ public class SaveOrderRequest   {
   /**
    * List of item quantities.
    * @return itemQuantities
-  **/
-  @ApiModelProperty(value = "List of item quantities.")
-
-  @Valid
-
-  public List<ItemQuantity> getItemQuantities() {
+  */
+  @Valid 
+  @Schema(name = "item_quantities", description = "List of item quantities.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("item_quantities")
+  public List<@Valid ItemQuantity> getItemQuantities() {
     return itemQuantities;
   }
 
-  public void setItemQuantities(List<ItemQuantity> itemQuantities) {
+  public void setItemQuantities(List<@Valid ItemQuantity> itemQuantities) {
     this.itemQuantities = itemQuantities;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -232,7 +231,6 @@ public class SaveOrderRequest   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SaveOrderRequest {\n");
-    
     sb.append("    addressId: ").append(toIndentedString(addressId)).append("\n");
     sb.append("    paymentId: ").append(toIndentedString(paymentId)).append("\n");
     sb.append("    bill: ").append(toIndentedString(bill)).append("\n");
@@ -248,7 +246,7 @@ public class SaveOrderRequest   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

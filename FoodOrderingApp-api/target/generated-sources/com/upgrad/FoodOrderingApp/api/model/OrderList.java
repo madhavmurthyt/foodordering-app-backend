@@ -1,5 +1,6 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -8,53 +9,46 @@ import com.upgrad.FoodOrderingApp.api.model.OrderListAddress;
 import com.upgrad.FoodOrderingApp.api.model.OrderListCoupon;
 import com.upgrad.FoodOrderingApp.api.model.OrderListCustomer;
 import com.upgrad.FoodOrderingApp.api.model.OrderListPayment;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * OrderList
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.948+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.805087+05:30[Asia/Kolkata]")
+public class OrderList {
 
+  private UUID id;
 
+  private BigDecimal bill;
 
-public class OrderList   {
-  @JsonProperty("id")
-  private UUID id = null;
+  private OrderListCoupon coupon;
 
-  @JsonProperty("bill")
-  private BigDecimal bill = null;
+  private BigDecimal discount;
 
-  @JsonProperty("coupon")
-  private OrderListCoupon coupon = null;
+  private String date;
 
-  @JsonProperty("discount")
-  private BigDecimal discount = null;
+  private OrderListPayment payment;
 
-  @JsonProperty("date")
-  private String date = null;
+  private OrderListCustomer customer;
 
-  @JsonProperty("payment")
-  private OrderListPayment payment = null;
+  private OrderListAddress address;
 
-  @JsonProperty("customer")
-  private OrderListCustomer customer = null;
-
-  @JsonProperty("address")
-  private OrderListAddress address = null;
-
-  @JsonProperty("item_quantities")
   @Valid
-  private List<ItemQuantityResponse> itemQuantities = null;
+  private List<@Valid ItemQuantityResponse> itemQuantities;
 
   public OrderList id(UUID id) {
     this.id = id;
@@ -64,11 +58,10 @@ public class OrderList   {
   /**
    * Unique identifier of the order in a standard UUID format
    * @return id
-  **/
-  @ApiModelProperty(value = "Unique identifier of the order in a standard UUID format")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "id", description = "Unique identifier of the order in a standard UUID format", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("id")
   public UUID getId() {
     return id;
   }
@@ -85,11 +78,10 @@ public class OrderList   {
   /**
    * order bill
    * @return bill
-  **/
-  @ApiModelProperty(value = "order bill")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "bill", description = "order bill", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("bill")
   public BigDecimal getBill() {
     return bill;
   }
@@ -106,11 +98,10 @@ public class OrderList   {
   /**
    * Get coupon
    * @return coupon
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "coupon", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("coupon")
   public OrderListCoupon getCoupon() {
     return coupon;
   }
@@ -127,11 +118,10 @@ public class OrderList   {
   /**
    * order discount
    * @return discount
-  **/
-  @ApiModelProperty(value = "order discount")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "discount", description = "order discount", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("discount")
   public BigDecimal getDiscount() {
     return discount;
   }
@@ -148,10 +138,10 @@ public class OrderList   {
   /**
    * Full date-time format (yyyy-MM-dd HH:mm)
    * @return date
-  **/
-  @ApiModelProperty(value = "Full date-time format (yyyy-MM-dd HH:mm)")
-
-
+  */
+  
+  @Schema(name = "date", description = "Full date-time format (yyyy-MM-dd HH:mm)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("date")
   public String getDate() {
     return date;
   }
@@ -168,11 +158,10 @@ public class OrderList   {
   /**
    * Get payment
    * @return payment
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "payment", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("payment")
   public OrderListPayment getPayment() {
     return payment;
   }
@@ -189,11 +178,10 @@ public class OrderList   {
   /**
    * Get customer
    * @return customer
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("customer")
   public OrderListCustomer getCustomer() {
     return customer;
   }
@@ -210,11 +198,10 @@ public class OrderList   {
   /**
    * Get address
    * @return address
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "address", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("address")
   public OrderListAddress getAddress() {
     return address;
   }
@@ -223,7 +210,7 @@ public class OrderList   {
     this.address = address;
   }
 
-  public OrderList itemQuantities(List<ItemQuantityResponse> itemQuantities) {
+  public OrderList itemQuantities(List<@Valid ItemQuantityResponse> itemQuantities) {
     this.itemQuantities = itemQuantities;
     return this;
   }
@@ -239,22 +226,20 @@ public class OrderList   {
   /**
    * List of item quantity
    * @return itemQuantities
-  **/
-  @ApiModelProperty(value = "List of item quantity")
-
-  @Valid
-
-  public List<ItemQuantityResponse> getItemQuantities() {
+  */
+  @Valid 
+  @Schema(name = "item_quantities", description = "List of item quantity", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("item_quantities")
+  public List<@Valid ItemQuantityResponse> getItemQuantities() {
     return itemQuantities;
   }
 
-  public void setItemQuantities(List<ItemQuantityResponse> itemQuantities) {
+  public void setItemQuantities(List<@Valid ItemQuantityResponse> itemQuantities) {
     this.itemQuantities = itemQuantities;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -282,7 +267,6 @@ public class OrderList   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OrderList {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    bill: ").append(toIndentedString(bill)).append("\n");
     sb.append("    coupon: ").append(toIndentedString(coupon)).append("\n");
@@ -300,7 +284,7 @@ public class OrderList   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

@@ -1,34 +1,35 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.upgrad.FoodOrderingApp.api.model.ItemListResponse;
+import com.upgrad.FoodOrderingApp.api.model.ItemList;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.upgrad.FoodOrderingApp.service.business.ItemService;
 import com.upgrad.FoodOrderingApp.service.business.RestaurantService;
 import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 import com.upgrad.FoodOrderingApp.service.exception.RestaurantNotFoundException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 import java.util.UUID;
 
 import static com.upgrad.FoodOrderingApp.service.common.ItemType.NON_VEG;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 // This class contains all the test cases regarding the item controller
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ItemControllerTest {
@@ -57,13 +58,13 @@ public class ItemControllerTest {
 
         final String responseString = mockMvc
             .perform(get("/item/restaurant/some_restaurant_id")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
 
-        final ItemListResponse itemListResponse = new ObjectMapper().readValue(responseString, ItemListResponse.class);
-        assertEquals(itemListResponse.size(), 1);
-        assertEquals(itemListResponse.get(0).getId().toString(), itemId);
+        final java.util.List<ItemList> itemListResponse = new ObjectMapper().readValue(responseString, new TypeReference<java.util.List<ItemList>>() {});
+        assertEquals(1, itemListResponse.size());
+        assertEquals(itemId, itemListResponse.get(0).getId().toString());
 
     }
 
@@ -75,7 +76,7 @@ public class ItemControllerTest {
             .thenThrow(new RestaurantNotFoundException("RNF-001", "No restaurant by this id"));
 
         mockMvc
-            .perform(get("/item/restaurant/some_restaurant_id").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .perform(get("/item/restaurant/some_restaurant_id").contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isNotFound())
             .andExpect(jsonPath("code").value("RNF-001"));
     }

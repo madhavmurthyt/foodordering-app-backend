@@ -1,30 +1,42 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.UUID;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * RestaurantUpdatedResponse
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.908+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.734447+05:30[Asia/Kolkata]")
+public class RestaurantUpdatedResponse {
 
+  private UUID id;
 
+  private String status;
 
-public class RestaurantUpdatedResponse   {
-  @JsonProperty("id")
-  private UUID id = null;
+  public RestaurantUpdatedResponse() {
+    super();
+  }
 
-  @JsonProperty("status")
-  private String status = null;
+  /**
+   * Constructor with only required parameters
+   */
+  public RestaurantUpdatedResponse(UUID id, String status) {
+    this.id = id;
+    this.status = status;
+  }
 
   public RestaurantUpdatedResponse id(UUID id) {
     this.id = id;
@@ -34,12 +46,10 @@ public class RestaurantUpdatedResponse   {
   /**
    * Unique identifier of the restaurant in a standard UUID format
    * @return id
-  **/
-  @ApiModelProperty(required = true, value = "Unique identifier of the restaurant in a standard UUID format")
-  @NotNull
-
-  @Valid
-
+  */
+  @NotNull @Valid 
+  @Schema(name = "id", description = "Unique identifier of the restaurant in a standard UUID format", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("id")
   public UUID getId() {
     return id;
   }
@@ -56,11 +66,10 @@ public class RestaurantUpdatedResponse   {
   /**
    * status of the updated restaurant
    * @return status
-  **/
-  @ApiModelProperty(required = true, value = "status of the updated restaurant")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "status", description = "status of the updated restaurant", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("status")
   public String getStatus() {
     return status;
   }
@@ -69,9 +78,8 @@ public class RestaurantUpdatedResponse   {
     this.status = status;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -92,7 +100,6 @@ public class RestaurantUpdatedResponse   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class RestaurantUpdatedResponse {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
@@ -103,7 +110,7 @@ public class RestaurantUpdatedResponse   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

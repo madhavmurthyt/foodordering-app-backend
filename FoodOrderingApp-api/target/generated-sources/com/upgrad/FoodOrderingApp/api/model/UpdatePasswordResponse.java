@@ -1,29 +1,41 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * UpdatePasswordResponse
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.830+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.610447+05:30[Asia/Kolkata]")
+public class UpdatePasswordResponse {
 
+  private String id;
 
+  private String status;
 
-public class UpdatePasswordResponse   {
-  @JsonProperty("id")
-  private String id = null;
+  public UpdatePasswordResponse() {
+    super();
+  }
 
-  @JsonProperty("status")
-  private String status = null;
+  /**
+   * Constructor with only required parameters
+   */
+  public UpdatePasswordResponse(String id, String status) {
+    this.id = id;
+    this.status = status;
+  }
 
   public UpdatePasswordResponse id(String id) {
     this.id = id;
@@ -33,11 +45,10 @@ public class UpdatePasswordResponse   {
   /**
    * uuid of the customer with updated password
    * @return id
-  **/
-  @ApiModelProperty(required = true, value = "uuid of the customer with updated password")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "id", description = "uuid of the customer with updated password", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("id")
   public String getId() {
     return id;
   }
@@ -54,11 +65,10 @@ public class UpdatePasswordResponse   {
   /**
    * message showing the status of the customer
    * @return status
-  **/
-  @ApiModelProperty(required = true, value = "message showing the status of the customer")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "status", description = "message showing the status of the customer", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("status")
   public String getStatus() {
     return status;
   }
@@ -67,9 +77,8 @@ public class UpdatePasswordResponse   {
     this.status = status;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -90,7 +99,6 @@ public class UpdatePasswordResponse   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class UpdatePasswordResponse {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
@@ -101,7 +109,7 @@ public class UpdatePasswordResponse   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

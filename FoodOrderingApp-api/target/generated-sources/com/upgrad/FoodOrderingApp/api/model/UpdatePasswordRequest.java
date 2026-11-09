@@ -1,29 +1,29 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * UpdatePasswordRequest
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.830+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.610447+05:30[Asia/Kolkata]")
+public class UpdatePasswordRequest {
 
+  private String oldPassword;
 
-
-public class UpdatePasswordRequest   {
-  @JsonProperty("old_password")
-  private String oldPassword = null;
-
-  @JsonProperty("new_password")
-  private String newPassword = null;
+  private String newPassword;
 
   public UpdatePasswordRequest oldPassword(String oldPassword) {
     this.oldPassword = oldPassword;
@@ -33,10 +33,10 @@ public class UpdatePasswordRequest   {
   /**
    * Existing password of the customer
    * @return oldPassword
-  **/
-  @ApiModelProperty(value = "Existing password of the customer")
-
-
+  */
+  
+  @Schema(name = "old_password", description = "Existing password of the customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("old_password")
   public String getOldPassword() {
     return oldPassword;
   }
@@ -53,10 +53,10 @@ public class UpdatePasswordRequest   {
   /**
    * New password by customer
    * @return newPassword
-  **/
-  @ApiModelProperty(value = "New password by customer")
-
-
+  */
+  
+  @Schema(name = "new_password", description = "New password by customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("new_password")
   public String getNewPassword() {
     return newPassword;
   }
@@ -65,9 +65,8 @@ public class UpdatePasswordRequest   {
     this.newPassword = newPassword;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -88,7 +87,6 @@ public class UpdatePasswordRequest   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class UpdatePasswordRequest {\n");
-    
     sb.append("    oldPassword: ").append(toIndentedString(oldPassword)).append("\n");
     sb.append("    newPassword: ").append(toIndentedString(newPassword)).append("\n");
     sb.append("}");
@@ -99,7 +97,7 @@ public class UpdatePasswordRequest   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

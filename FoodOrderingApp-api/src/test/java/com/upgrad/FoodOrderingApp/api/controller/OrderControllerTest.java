@@ -7,14 +7,14 @@ import com.upgrad.FoodOrderingApp.api.model.SaveOrderRequest;
 import com.upgrad.FoodOrderingApp.service.business.*;
 import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 // This class contains all the test cases regarding the order controller
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class OrderControllerTest {
@@ -85,7 +85,7 @@ public class OrderControllerTest {
 
         mockMvc
             .perform(post("/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2")
                 .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
             .andExpect(status().isCreated())
@@ -112,7 +112,7 @@ public class OrderControllerTest {
 
         mockMvc
             .perform(post("/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer invalid_auth")
                 .content(new ObjectMapper().writeValueAsString(getSaveOrderRequest())))
             .andExpect(status().isForbidden())
@@ -134,7 +134,7 @@ public class OrderControllerTest {
             .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
         mockMvc
             .perform(post("/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer invalid_auth")
                 .content(new ObjectMapper().writeValueAsString(getSaveOrderRequest())))
             .andExpect(status().isForbidden())
@@ -157,7 +157,7 @@ public class OrderControllerTest {
             .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
         mockMvc
             .perform(post("/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer invalid_auth")
                 .content(new ObjectMapper().writeValueAsString(getSaveOrderRequest())))
             .andExpect(status().isForbidden())
@@ -185,7 +185,7 @@ public class OrderControllerTest {
 
         mockMvc
             .perform(post("/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2")
                 .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
             .andExpect(status().isNotFound())
@@ -219,7 +219,7 @@ public class OrderControllerTest {
 
         mockMvc
             .perform(post("/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2")
                 .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
             .andExpect(status().isNotFound())
@@ -254,7 +254,7 @@ public class OrderControllerTest {
 
         mockMvc
             .perform(post("/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2")
                 .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
             .andExpect(status().isForbidden())
@@ -291,7 +291,7 @@ public class OrderControllerTest {
 
         mockMvc
             .perform(post("/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2")
                 .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
             .andExpect(status().isNotFound())
@@ -331,7 +331,7 @@ public class OrderControllerTest {
 
         mockMvc
             .perform(post("/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2")
                 .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
             .andExpect(status().isNotFound())
@@ -367,7 +367,7 @@ public class OrderControllerTest {
 
         final String responseString = mockMvc
             .perform(get("/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2"))
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
@@ -391,7 +391,7 @@ public class OrderControllerTest {
             .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
         mockMvc
             .perform(get("/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer invalid_auth"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-001"));
@@ -408,7 +408,7 @@ public class OrderControllerTest {
             .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
         mockMvc
             .perform(get("/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer invalid_auth"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-002"));
@@ -425,7 +425,7 @@ public class OrderControllerTest {
             .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
         mockMvc
             .perform(get("/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer invalid_auth"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-003"));
@@ -448,7 +448,7 @@ public class OrderControllerTest {
 
         mockMvc
             .perform(get("/order/coupon/myCoupon")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("id").value(couponId))
@@ -464,7 +464,7 @@ public class OrderControllerTest {
             .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
         mockMvc
             .perform(get("/order/coupon/myCoupon")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer invalid_auth"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-001"));
@@ -481,7 +481,7 @@ public class OrderControllerTest {
             .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
         mockMvc
             .perform(get("/order/coupon/myCoupon")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer invalid_auth"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-002"));
@@ -498,7 +498,7 @@ public class OrderControllerTest {
             .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
         mockMvc
             .perform(get("/order/coupon/myCoupon")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer invalid_auth"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-003"));
@@ -519,7 +519,7 @@ public class OrderControllerTest {
 
         mockMvc
             .perform(get("/order/coupon/emptyString")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2"))
             .andExpect(status().isNotFound())
             .andExpect(jsonPath("code").value("CPF-002"));
@@ -539,7 +539,7 @@ public class OrderControllerTest {
 
         mockMvc
             .perform(get("/order/coupon/myCoupon")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer database_accesstoken2"))
             .andExpect(status().isNotFound())
             .andExpect(jsonPath("code").value("CPF-001"));

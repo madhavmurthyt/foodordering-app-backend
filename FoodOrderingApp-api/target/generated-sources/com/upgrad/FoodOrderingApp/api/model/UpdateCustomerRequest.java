@@ -1,29 +1,29 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * UpdateCustomerRequest
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.830+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.610447+05:30[Asia/Kolkata]")
+public class UpdateCustomerRequest {
 
+  private String firstName;
 
-
-public class UpdateCustomerRequest   {
-  @JsonProperty("first_name")
-  private String firstName = null;
-
-  @JsonProperty("last_name")
-  private String lastName = null;
+  private String lastName;
 
   public UpdateCustomerRequest firstName(String firstName) {
     this.firstName = firstName;
@@ -33,10 +33,10 @@ public class UpdateCustomerRequest   {
   /**
    * First name of the new customer
    * @return firstName
-  **/
-  @ApiModelProperty(value = "First name of the new customer")
-
-
+  */
+  
+  @Schema(name = "first_name", description = "First name of the new customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("first_name")
   public String getFirstName() {
     return firstName;
   }
@@ -53,10 +53,10 @@ public class UpdateCustomerRequest   {
   /**
    * Last name of the new customer
    * @return lastName
-  **/
-  @ApiModelProperty(value = "Last name of the new customer")
-
-
+  */
+  
+  @Schema(name = "last_name", description = "Last name of the new customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("last_name")
   public String getLastName() {
     return lastName;
   }
@@ -65,9 +65,8 @@ public class UpdateCustomerRequest   {
     this.lastName = lastName;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -88,7 +87,6 @@ public class UpdateCustomerRequest   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class UpdateCustomerRequest {\n");
-    
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
     sb.append("}");
@@ -99,7 +97,7 @@ public class UpdateCustomerRequest   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

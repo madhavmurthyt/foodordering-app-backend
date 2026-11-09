@@ -1,37 +1,37 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.upgrad.FoodOrderingApp.api.model.ItemList;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * CategoryList
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.908+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.734447+05:30[Asia/Kolkata]")
+public class CategoryList {
 
+  private UUID id;
 
+  private String categoryName;
 
-public class CategoryList   {
-  @JsonProperty("id")
-  private UUID id = null;
-
-  @JsonProperty("category_name")
-  private String categoryName = null;
-
-  @JsonProperty("item_list")
   @Valid
-  private List<ItemList> itemList = null;
+  private List<@Valid ItemList> itemList;
 
   public CategoryList id(UUID id) {
     this.id = id;
@@ -41,11 +41,10 @@ public class CategoryList   {
   /**
    * Unique identifier of the category in a standard UUID format
    * @return id
-  **/
-  @ApiModelProperty(value = "Unique identifier of the category in a standard UUID format")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "id", description = "Unique identifier of the category in a standard UUID format", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("id")
   public UUID getId() {
     return id;
   }
@@ -62,10 +61,10 @@ public class CategoryList   {
   /**
    * Name of the category
    * @return categoryName
-  **/
-  @ApiModelProperty(value = "Name of the category")
-
-
+  */
+  
+  @Schema(name = "category_name", description = "Name of the category", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("category_name")
   public String getCategoryName() {
     return categoryName;
   }
@@ -74,7 +73,7 @@ public class CategoryList   {
     this.categoryName = categoryName;
   }
 
-  public CategoryList itemList(List<ItemList> itemList) {
+  public CategoryList itemList(List<@Valid ItemList> itemList) {
     this.itemList = itemList;
     return this;
   }
@@ -90,22 +89,20 @@ public class CategoryList   {
   /**
    * List of items
    * @return itemList
-  **/
-  @ApiModelProperty(value = "List of items")
-
-  @Valid
-
-  public List<ItemList> getItemList() {
+  */
+  @Valid 
+  @Schema(name = "item_list", description = "List of items", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("item_list")
+  public List<@Valid ItemList> getItemList() {
     return itemList;
   }
 
-  public void setItemList(List<ItemList> itemList) {
+  public void setItemList(List<@Valid ItemList> itemList) {
     this.itemList = itemList;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -127,7 +124,6 @@ public class CategoryList   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CategoryList {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    categoryName: ").append(toIndentedString(categoryName)).append("\n");
     sb.append("    itemList: ").append(toIndentedString(itemList)).append("\n");
@@ -139,7 +135,7 @@ public class CategoryList   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

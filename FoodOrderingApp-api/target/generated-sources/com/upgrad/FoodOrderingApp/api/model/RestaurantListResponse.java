@@ -1,32 +1,34 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.upgrad.FoodOrderingApp.api.model.RestaurantList;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * RestaurantListResponse
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.908+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.734447+05:30[Asia/Kolkata]")
+public class RestaurantListResponse {
 
-
-
-public class RestaurantListResponse   {
-  @JsonProperty("restaurants")
   @Valid
-  private List<RestaurantList> restaurants = null;
+  private List<@Valid RestaurantList> restaurants;
 
-  public RestaurantListResponse restaurants(List<RestaurantList> restaurants) {
+  public RestaurantListResponse restaurants(List<@Valid RestaurantList> restaurants) {
     this.restaurants = restaurants;
     return this;
   }
@@ -42,22 +44,20 @@ public class RestaurantListResponse   {
   /**
    * List of restaurants
    * @return restaurants
-  **/
-  @ApiModelProperty(value = "List of restaurants")
-
-  @Valid
-
-  public List<RestaurantList> getRestaurants() {
+  */
+  @Valid 
+  @Schema(name = "restaurants", description = "List of restaurants", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("restaurants")
+  public List<@Valid RestaurantList> getRestaurants() {
     return restaurants;
   }
 
-  public void setRestaurants(List<RestaurantList> restaurants) {
+  public void setRestaurants(List<@Valid RestaurantList> restaurants) {
     this.restaurants = restaurants;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -77,7 +77,6 @@ public class RestaurantListResponse   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class RestaurantListResponse {\n");
-    
     sb.append("    restaurants: ").append(toIndentedString(restaurants)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -87,7 +86,7 @@ public class RestaurantListResponse   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

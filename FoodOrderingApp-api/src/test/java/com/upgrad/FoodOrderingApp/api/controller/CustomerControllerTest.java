@@ -7,14 +7,14 @@ import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedExceptio
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
 import com.upgrad.FoodOrderingApp.service.exception.UpdateCustomerException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 // This class contains all the test cases regarding the customer controller
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CustomerControllerTest {
@@ -50,7 +50,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(post("/customer/signup")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content("{\"first_name\":\"first\", \"last_name\":\"last\", \"email_address\":\"abc@email.com\", \"contact_number\":\"9090909090\", \"password\":\"qawsedrf@123\"}"))
             .andExpect(status().isCreated())
             .andExpect(jsonPath("id").value(customerId));
@@ -62,7 +62,7 @@ public class CustomerControllerTest {
     public void shouldNotSignUpForEmptyRequest() throws Exception {
         mockMvc
             .perform(post("/customer/signup")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content("{\"first_name\":\"first\", \"last_name\":\"last\", \"email_address\":\"\", \"contact_number\":\"9090909090\", \"password\":\"qawsedrf@123\"}"))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("code").value("SGR-005"));
@@ -77,7 +77,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(post("/customer/signup")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content("{\"first_name\":\"first\", \"last_name\":\"last\", \"email_address\":\"abc@1\", \"contact_number\":\"9090909090\", \"password\":\"qawsedrf@123\"}"))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("code").value("SGR-002"));
@@ -92,7 +92,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(post("/customer/signup")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content("{\"first_name\":\"first\", \"last_name\":\"last\", \"email_address\":\"abc@email.com\", \"contact_number\":\"123\", \"password\":\"qawsedrf@123\"}"))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("code").value("SGR-003"));
@@ -107,7 +107,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(post("/customer/signup")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content("{\"first_name\":\"first\", \"last_name\":\"last\", \"email_address\":\"abc@email.com\", \"contact_number\":\"9090909090\", \"password\":\"1\"}"))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("code").value("SGR-004"));
@@ -123,7 +123,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(post("/customer/signup")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content("{\"first_name\":\"first\", \"last_name\":\"last\", \"email_address\":\"abc@email.com\", \"contact_number\":\"9090909090\", \"password\":\"qawsedrf@123\"}"))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("code").value("SGR-001"));
@@ -147,7 +147,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(post("/customer/login")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Basic " + getEncoder().encodeToString("9090909090:CorrectPassword".getBytes())))
             .andExpect(status().isOk())
             .andExpect(jsonPath("id").value(customerId))
@@ -160,7 +160,7 @@ public class CustomerControllerTest {
     public void shouldNotLoginForInvalidAuthorizationFormat() throws Exception {
         mockMvc
             .perform(post("/customer/login")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Basic " + getEncoder().encodeToString(":".getBytes())))
             .andExpect(status().isUnauthorized())
             .andExpect(jsonPath("code").value("ATH-003"));
@@ -175,7 +175,7 @@ public class CustomerControllerTest {
             .thenThrow(new AuthenticationFailedException("ATH-001", "This contact number does not exist"));
         mockMvc
             .perform(post("/customer/login")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Basic " + getEncoder().encodeToString("123:CorrectPassword".getBytes())))
             .andExpect(status().isUnauthorized())
             .andExpect(jsonPath("code").value("ATH-001"));
@@ -189,7 +189,7 @@ public class CustomerControllerTest {
             .thenThrow(new AuthenticationFailedException("ATH-002", "Password failed"));
         mockMvc
             .perform(post("/customer/login")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Basic " + getEncoder().encodeToString("9090909090:IncorrectPassword".getBytes())))
             .andExpect(status().isUnauthorized())
             .andExpect(jsonPath("code").value("ATH-002"));
@@ -210,7 +210,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(post("/customer/logout")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer access-token"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("id").value(customerId));
@@ -225,7 +225,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(post("/customer/logout")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer auth"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-001"));
@@ -240,7 +240,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(post("/customer/logout")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer auth"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-002"));
@@ -255,7 +255,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(post("/customer/logout")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer auth"))
             .andExpect(status().isForbidden())
             .andExpect(jsonPath("code").value("ATHR-003"));
@@ -281,7 +281,7 @@ public class CustomerControllerTest {
         when(mockCustomerService.updateCustomer(customerEntity)).thenReturn(updatedCustomerEntity);
         mockMvc
             .perform(put("/customer")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer auth")
                 .content("{\"first_name\":\"first\", \"last_name\":\"last\"}"))
             .andExpect(status().isOk())
@@ -296,7 +296,7 @@ public class CustomerControllerTest {
     public void shouldNotUpdateCustomerDetailsIfFirstNameNotPresentInTheRequest() throws Exception {
         mockMvc
             .perform(put("/customer")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "auth")
                 .content("{\"first_name\":\"\", \"last_name\":\"last\"}"))
             .andExpect(status().isBadRequest())
@@ -314,7 +314,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(put("/customer")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer auth")
                 .content("{\"first_name\":\"first\", \"last_name\":\"last\"}"))
             .andExpect(status().isForbidden())
@@ -332,7 +332,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(put("/customer")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer auth")
                 .content("{\"first_name\":\"first\", \"last_name\":\"last\"}"))
             .andExpect(status().isForbidden())
@@ -350,7 +350,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(put("/customer")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer auth")
                 .content("{\"first_name\":\"first\", \"last_name\":\"last\"}"))
             .andExpect(status().isForbidden())
@@ -373,7 +373,7 @@ public class CustomerControllerTest {
             .thenReturn(customerEntity);
         mockMvc
             .perform(put("/customer/password")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer auth")
                 .content("{\"old_password\":\"oldPwd\", \"new_password\":\"newPwd\"}"))
             .andExpect(status().isOk())
@@ -388,7 +388,7 @@ public class CustomerControllerTest {
     public void shouldNotUpdateCustomerPasswordIfOldPasswordIsEmpty() throws Exception {
         mockMvc
             .perform(put("/customer/password")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "auth")
                 .content("{\"old_password\":\"\", \"new_password\":\"newPwd\"}"))
             .andExpect(status().isBadRequest())
@@ -403,7 +403,7 @@ public class CustomerControllerTest {
     public void shouldNotUpdateCustomerPasswordIfNewPasswordIsEmpty() throws Exception {
         mockMvc
             .perform(put("/customer/password")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "auth")
                 .content("{\"old_password\":\"oldPwd\", \"new_password\":\"\"}"))
             .andExpect(status().isBadRequest())
@@ -421,7 +421,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(put("/customer/password")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer auth")
                 .content("{\"old_password\":\"oldPwd\", \"new_password\":\"newPwd\"}"))
             .andExpect(status().isForbidden())
@@ -438,7 +438,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(put("/customer/password")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer auth")
                 .content("{\"old_password\":\"oldPwd\", \"new_password\":\"newPwd\"}"))
             .andExpect(status().isForbidden())
@@ -455,7 +455,7 @@ public class CustomerControllerTest {
 
         mockMvc
             .perform(put("/customer/password")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer auth")
                 .content("{\"old_password\":\"oldPwd\", \"new_password\":\"newPwd\"}"))
             .andExpect(status().isForbidden())
@@ -474,7 +474,7 @@ public class CustomerControllerTest {
             .thenThrow(new UpdateCustomerException("UCR-001", "Weak password!"));
         mockMvc
             .perform(put("/customer/password")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer auth")
                 .content("{\"old_password\":\"oldPwd\", \"new_password\":\"newPwd\"}"))
             .andExpect(status().isBadRequest())

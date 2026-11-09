@@ -1,38 +1,49 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * SignupCustomerRequest
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.830+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.610447+05:30[Asia/Kolkata]")
+public class SignupCustomerRequest {
 
+  private String firstName;
 
+  private String lastName;
 
-public class SignupCustomerRequest   {
-  @JsonProperty("first_name")
-  private String firstName = null;
+  private String emailAddress;
 
-  @JsonProperty("last_name")
-  private String lastName = null;
+  private String contactNumber;
 
-  @JsonProperty("email_address")
-  private String emailAddress = null;
+  private String password;
 
-  @JsonProperty("contact_number")
-  private String contactNumber = null;
+  public SignupCustomerRequest() {
+    super();
+  }
 
-  @JsonProperty("password")
-  private String password = null;
+  /**
+   * Constructor with only required parameters
+   */
+  public SignupCustomerRequest(String firstName, String emailAddress, String contactNumber, String password) {
+    this.firstName = firstName;
+    this.emailAddress = emailAddress;
+    this.contactNumber = contactNumber;
+    this.password = password;
+  }
 
   public SignupCustomerRequest firstName(String firstName) {
     this.firstName = firstName;
@@ -42,11 +53,10 @@ public class SignupCustomerRequest   {
   /**
    * First name of the new customer
    * @return firstName
-  **/
-  @ApiModelProperty(required = true, value = "First name of the new customer")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "first_name", description = "First name of the new customer", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("first_name")
   public String getFirstName() {
     return firstName;
   }
@@ -63,10 +73,10 @@ public class SignupCustomerRequest   {
   /**
    * Last name of the new customer
    * @return lastName
-  **/
-  @ApiModelProperty(value = "Last name of the new customer")
-
-
+  */
+  
+  @Schema(name = "last_name", description = "Last name of the new customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("last_name")
   public String getLastName() {
     return lastName;
   }
@@ -83,11 +93,10 @@ public class SignupCustomerRequest   {
   /**
    * Email address of the new customer
    * @return emailAddress
-  **/
-  @ApiModelProperty(required = true, value = "Email address of the new customer")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "email_address", description = "Email address of the new customer", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("email_address")
   public String getEmailAddress() {
     return emailAddress;
   }
@@ -104,11 +113,10 @@ public class SignupCustomerRequest   {
   /**
    * Contact Number of the new customer
    * @return contactNumber
-  **/
-  @ApiModelProperty(required = true, value = "Contact Number of the new customer")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "contact_number", description = "Contact Number of the new customer", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("contact_number")
   public String getContactNumber() {
     return contactNumber;
   }
@@ -125,11 +133,10 @@ public class SignupCustomerRequest   {
   /**
    * Password of the new customer
    * @return password
-  **/
-  @ApiModelProperty(required = true, value = "Password of the new customer")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "password", description = "Password of the new customer", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("password")
   public String getPassword() {
     return password;
   }
@@ -138,9 +145,8 @@ public class SignupCustomerRequest   {
     this.password = password;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -164,12 +170,11 @@ public class SignupCustomerRequest   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SignupCustomerRequest {\n");
-    
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
     sb.append("    emailAddress: ").append(toIndentedString(emailAddress)).append("\n");
     sb.append("    contactNumber: ").append(toIndentedString(contactNumber)).append("\n");
-    sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    password: ").append("*").append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -178,7 +183,7 @@ public class SignupCustomerRequest   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

@@ -1,38 +1,50 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * SaveAddressRequest
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.990+05:30")
 
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.864512+05:30[Asia/Kolkata]")
+public class SaveAddressRequest {
 
+  private String flatBuildingName;
 
+  private String locality;
 
-public class SaveAddressRequest   {
-  @JsonProperty("flat_building_name")
-  private String flatBuildingName = null;
+  private String city;
 
-  @JsonProperty("locality")
-  private String locality = null;
+  private String pincode;
 
-  @JsonProperty("city")
-  private String city = null;
+  private String stateUuid;
 
-  @JsonProperty("pincode")
-  private String pincode = null;
+  public SaveAddressRequest() {
+    super();
+  }
 
-  @JsonProperty("state_uuid")
-  private String stateUuid = null;
+  /**
+   * Constructor with only required parameters
+   */
+  public SaveAddressRequest(String flatBuildingName, String locality, String city, String pincode, String stateUuid) {
+    this.flatBuildingName = flatBuildingName;
+    this.locality = locality;
+    this.city = city;
+    this.pincode = pincode;
+    this.stateUuid = stateUuid;
+  }
 
   public SaveAddressRequest flatBuildingName(String flatBuildingName) {
     this.flatBuildingName = flatBuildingName;
@@ -42,11 +54,10 @@ public class SaveAddressRequest   {
   /**
    * Flat and building address
    * @return flatBuildingName
-  **/
-  @ApiModelProperty(required = true, value = "Flat and building address")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "flat_building_name", description = "Flat and building address", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("flat_building_name")
   public String getFlatBuildingName() {
     return flatBuildingName;
   }
@@ -63,11 +74,10 @@ public class SaveAddressRequest   {
   /**
    * Locality of the address
    * @return locality
-  **/
-  @ApiModelProperty(required = true, value = "Locality of the address")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "locality", description = "Locality of the address", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("locality")
   public String getLocality() {
     return locality;
   }
@@ -84,11 +94,10 @@ public class SaveAddressRequest   {
   /**
    * City of the address
    * @return city
-  **/
-  @ApiModelProperty(required = true, value = "City of the address")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "city", description = "City of the address", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("city")
   public String getCity() {
     return city;
   }
@@ -105,11 +114,10 @@ public class SaveAddressRequest   {
   /**
    * pincode of the address
    * @return pincode
-  **/
-  @ApiModelProperty(required = true, value = "pincode of the address")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "pincode", description = "pincode of the address", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("pincode")
   public String getPincode() {
     return pincode;
   }
@@ -126,11 +134,10 @@ public class SaveAddressRequest   {
   /**
    * Id of the state
    * @return stateUuid
-  **/
-  @ApiModelProperty(required = true, value = "Id of the state")
-  @NotNull
-
-
+  */
+  @NotNull 
+  @Schema(name = "state_uuid", description = "Id of the state", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("state_uuid")
   public String getStateUuid() {
     return stateUuid;
   }
@@ -139,9 +146,8 @@ public class SaveAddressRequest   {
     this.stateUuid = stateUuid;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -165,7 +171,6 @@ public class SaveAddressRequest   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SaveAddressRequest {\n");
-    
     sb.append("    flatBuildingName: ").append(toIndentedString(flatBuildingName)).append("\n");
     sb.append("    locality: ").append(toIndentedString(locality)).append("\n");
     sb.append("    city: ").append(toIndentedString(city)).append("\n");
@@ -179,7 +184,7 @@ public class SaveAddressRequest   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

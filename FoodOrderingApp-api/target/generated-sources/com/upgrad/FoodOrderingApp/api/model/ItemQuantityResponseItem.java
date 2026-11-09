@@ -1,34 +1,35 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.UUID;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * ItemQuantityResponseItem
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.948+05:30")
 
+@JsonTypeName("ItemQuantityResponse_item")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.805087+05:30[Asia/Kolkata]")
+public class ItemQuantityResponseItem {
 
+  private UUID id;
 
+  private String itemName;
 
-public class ItemQuantityResponseItem   {
-  @JsonProperty("id")
-  private UUID id = null;
-
-  @JsonProperty("item_name")
-  private String itemName = null;
-
-  @JsonProperty("item_price")
-  private Integer itemPrice = null;
+  private Integer itemPrice;
 
   /**
    * Gets or Sets type
@@ -44,25 +45,28 @@ public class ItemQuantityResponseItem   {
       this.value = value;
     }
 
-    @Override
     @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
     public String toString() {
       return String.valueOf(value);
     }
 
     @JsonCreator
-    public static TypeEnum fromValue(String text) {
+    public static TypeEnum fromValue(String value) {
       for (TypeEnum b : TypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(value)) {
           return b;
         }
       }
-      return null;
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
   }
 
-  @JsonProperty("type")
-  private TypeEnum type = null;
+  private TypeEnum type;
 
   public ItemQuantityResponseItem id(UUID id) {
     this.id = id;
@@ -72,11 +76,10 @@ public class ItemQuantityResponseItem   {
   /**
    * Unique identifier of the item in a standard UUID format
    * @return id
-  **/
-  @ApiModelProperty(value = "Unique identifier of the item in a standard UUID format")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "id", description = "Unique identifier of the item in a standard UUID format", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("id")
   public UUID getId() {
     return id;
   }
@@ -93,10 +96,10 @@ public class ItemQuantityResponseItem   {
   /**
    * Name of the item
    * @return itemName
-  **/
-  @ApiModelProperty(value = "Name of the item")
-
-
+  */
+  
+  @Schema(name = "item_name", description = "Name of the item", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("item_name")
   public String getItemName() {
     return itemName;
   }
@@ -113,10 +116,10 @@ public class ItemQuantityResponseItem   {
   /**
    * Price of the item
    * @return itemPrice
-  **/
-  @ApiModelProperty(value = "Price of the item")
-
-
+  */
+  
+  @Schema(name = "item_price", description = "Price of the item", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("item_price")
   public Integer getItemPrice() {
     return itemPrice;
   }
@@ -133,10 +136,10 @@ public class ItemQuantityResponseItem   {
   /**
    * Get type
    * @return type
-  **/
-  @ApiModelProperty(value = "")
-
-
+  */
+  
+  @Schema(name = "type", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("type")
   public TypeEnum getType() {
     return type;
   }
@@ -145,9 +148,8 @@ public class ItemQuantityResponseItem   {
     this.type = type;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -170,7 +172,6 @@ public class ItemQuantityResponseItem   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ItemQuantityResponseItem {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    itemName: ").append(toIndentedString(itemName)).append("\n");
     sb.append("    itemPrice: ").append(toIndentedString(itemPrice)).append("\n");
@@ -183,7 +184,7 @@ public class ItemQuantityResponseItem   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

@@ -1,7 +1,6 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.api.model.ItemList;
-import com.upgrad.FoodOrderingApp.api.model.ItemListResponse;
 import com.upgrad.FoodOrderingApp.service.business.ItemService;
 import com.upgrad.FoodOrderingApp.service.business.RestaurantService;
 import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
@@ -36,17 +35,15 @@ public class ItemController {
     @RequestMapping(method = RequestMethod.GET,
         path = "/item/restaurant/{restaurant_id}",
         produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ItemListResponse> getItemsByPopularity(@PathVariable("restaurant_id") final String restaurantId)
+    public ResponseEntity<List<ItemList>> getItemsByPopularity(@PathVariable("restaurant_id") final String restaurantId)
         throws RestaurantNotFoundException {
 
         RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantId);
 
-        // Retrieve ItemEntity List matching restaurantId and sorted by popularity
         List<ItemEntity> itemList = itemService.getItemsByPopularity(restaurantEntity);
 
-        ItemListResponse itemListResponse = new ItemListResponse();
+        List<ItemList> itemListResponse = new java.util.ArrayList<>();
 
-        // Map retrieved ItemEntity to Response Object List
         int count = 0;
         for (ItemEntity itemEntity : itemList) {
             if (count < 5) {
@@ -62,6 +59,6 @@ public class ItemController {
             }
         }
 
-        return new ResponseEntity<ItemListResponse>(itemListResponse, HttpStatus.OK);
+        return new ResponseEntity<>(itemListResponse, HttpStatus.OK);
     }
 }

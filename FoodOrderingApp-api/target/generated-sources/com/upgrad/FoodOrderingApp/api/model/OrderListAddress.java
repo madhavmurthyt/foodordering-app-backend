@@ -1,43 +1,41 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.upgrad.FoodOrderingApp.api.model.OrderListAddressState;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.UUID;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * OrderListAddress
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.948+05:30")
 
+@JsonTypeName("OrderList_address")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.805087+05:30[Asia/Kolkata]")
+public class OrderListAddress {
 
+  private UUID id;
 
+  private String flatBuildingName;
 
-public class OrderListAddress   {
-  @JsonProperty("id")
-  private UUID id = null;
+  private String locality;
 
-  @JsonProperty("flat_building_name")
-  private String flatBuildingName = null;
+  private String city;
 
-  @JsonProperty("locality")
-  private String locality = null;
+  private String pincode;
 
-  @JsonProperty("city")
-  private String city = null;
-
-  @JsonProperty("pincode")
-  private String pincode = null;
-
-  @JsonProperty("state")
-  private OrderListAddressState state = null;
+  private OrderListAddressState state;
 
   public OrderListAddress id(UUID id) {
     this.id = id;
@@ -47,11 +45,10 @@ public class OrderListAddress   {
   /**
    * Unique identifier of the address in a standard UUID format
    * @return id
-  **/
-  @ApiModelProperty(value = "Unique identifier of the address in a standard UUID format")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "id", description = "Unique identifier of the address in a standard UUID format", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("id")
   public UUID getId() {
     return id;
   }
@@ -68,10 +65,10 @@ public class OrderListAddress   {
   /**
    * Flat and building address
    * @return flatBuildingName
-  **/
-  @ApiModelProperty(value = "Flat and building address")
-
-
+  */
+  
+  @Schema(name = "flat_building_name", description = "Flat and building address", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("flat_building_name")
   public String getFlatBuildingName() {
     return flatBuildingName;
   }
@@ -88,10 +85,10 @@ public class OrderListAddress   {
   /**
    * Locality of the address
    * @return locality
-  **/
-  @ApiModelProperty(value = "Locality of the address")
-
-
+  */
+  
+  @Schema(name = "locality", description = "Locality of the address", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("locality")
   public String getLocality() {
     return locality;
   }
@@ -108,10 +105,10 @@ public class OrderListAddress   {
   /**
    * City of the address
    * @return city
-  **/
-  @ApiModelProperty(value = "City of the address")
-
-
+  */
+  
+  @Schema(name = "city", description = "City of the address", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("city")
   public String getCity() {
     return city;
   }
@@ -128,10 +125,10 @@ public class OrderListAddress   {
   /**
    * pincode of the address
    * @return pincode
-  **/
-  @ApiModelProperty(value = "pincode of the address")
-
-
+  */
+  
+  @Schema(name = "pincode", description = "pincode of the address", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("pincode")
   public String getPincode() {
     return pincode;
   }
@@ -148,11 +145,10 @@ public class OrderListAddress   {
   /**
    * Get state
    * @return state
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "state", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("state")
   public OrderListAddressState getState() {
     return state;
   }
@@ -161,9 +157,8 @@ public class OrderListAddress   {
     this.state = state;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -188,7 +183,6 @@ public class OrderListAddress   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OrderListAddress {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    flatBuildingName: ").append(toIndentedString(flatBuildingName)).append("\n");
     sb.append("    locality: ").append(toIndentedString(locality)).append("\n");
@@ -203,7 +197,7 @@ public class OrderListAddress   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

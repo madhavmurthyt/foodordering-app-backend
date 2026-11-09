@@ -1,30 +1,32 @@
 package com.upgrad.FoodOrderingApp.api.model;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.UUID;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * AddressListState
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2026-11-08T17:40:44.990+05:30")
 
+@JsonTypeName("AddressList_state")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.864512+05:30[Asia/Kolkata]")
+public class AddressListState {
 
+  private UUID id;
 
-
-public class AddressListState   {
-  @JsonProperty("id")
-  private UUID id = null;
-
-  @JsonProperty("state_name")
-  private String stateName = null;
+  private String stateName;
 
   public AddressListState id(UUID id) {
     this.id = id;
@@ -34,11 +36,10 @@ public class AddressListState   {
   /**
    * Unique identifier of the state in a standard UUID format
    * @return id
-  **/
-  @ApiModelProperty(value = "Unique identifier of the state in a standard UUID format")
-
-  @Valid
-
+  */
+  @Valid 
+  @Schema(name = "id", description = "Unique identifier of the state in a standard UUID format", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("id")
   public UUID getId() {
     return id;
   }
@@ -55,10 +56,10 @@ public class AddressListState   {
   /**
    * Name of the state
    * @return stateName
-  **/
-  @ApiModelProperty(value = "Name of the state")
-
-
+  */
+  
+  @Schema(name = "state_name", description = "Name of the state", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("state_name")
   public String getStateName() {
     return stateName;
   }
@@ -67,9 +68,8 @@ public class AddressListState   {
     this.stateName = stateName;
   }
 
-
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -90,7 +90,6 @@ public class AddressListState   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class AddressListState {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    stateName: ").append(toIndentedString(stateName)).append("\n");
     sb.append("}");
@@ -101,7 +100,7 @@ public class AddressListState   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }
