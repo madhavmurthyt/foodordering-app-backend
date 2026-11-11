@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * PaymentResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.954403+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-11T22:00:22.486350+05:30[Asia/Kolkata]")
 public class PaymentResponse {
 
   private UUID id;

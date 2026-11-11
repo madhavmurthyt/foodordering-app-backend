@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * ItemQuantity
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.805087+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-11T22:00:22.305950+05:30[Asia/Kolkata]")
 public class ItemQuantity {
 
   private UUID itemId;

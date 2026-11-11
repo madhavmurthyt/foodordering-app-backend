@@ -56,7 +56,7 @@ public class ItemEntity implements Serializable {
     @EqualsExclude
     private Set<CategoryEntity> categories = new HashSet<CategoryEntity>();
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     @NotNull
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ToStringExclude

@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * CategoryListResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-08T17:53:58.904725+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-11T22:00:22.414014+05:30[Asia/Kolkata]")
 public class CategoryListResponse {
 
   private UUID id;
