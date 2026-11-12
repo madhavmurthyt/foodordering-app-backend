@@ -181,7 +181,7 @@ public class OrderController {
     }
 
 
-    /**
+    /***
      * Method takes customer's access token and a coupon name  as inputs and the returns the coupon details
      *
      * @param headerParam Customer's access token as request paremeter
