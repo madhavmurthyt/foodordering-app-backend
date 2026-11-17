@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.UUID;
 
@@ -61,6 +62,31 @@ public class CustomerController {
         response.id(customerAuthEntity.getCustomer().getUuid()).firstName(customerAuthEntity.getCustomer().getFirstName()).lastName(customerAuthEntity.getCustomer().getLastName()).contactNumber(customerAuthEntity.getCustomer().getContactNumber()).emailAddress(customerAuthEntity.getCustomer().getEmail()).message("LOGGED IN SUCCESSFULLY");
 
         // Set Http Headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(AppConstants.HTTP_ACCESS_TOKEN_HEADER, customerAuthEntity.getAccessToken());
+        headers.setAccessControlExposeHeaders(Collections.singletonList(AppConstants.HTTP_ACCESS_TOKEN_HEADER));
+        return new ResponseEntity<LoginResponse>(response, headers, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, path = "/google-login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<LoginResponse> googleLogin(@RequestBody final Map<String, String> request) throws AuthenticationFailedException, UnexpectedException {
+        String idToken = request.get("id_token");
+        if (idToken == null || idToken.isEmpty()) {
+            throw new AuthenticationFailedException("ATH-004", "Google ID token is required");
+        }
+
+        final CustomerAuthEntity customerAuthEntity = customerService.authenticateWithGoogle(idToken);
+        final CustomerEntity customer = customerAuthEntity.getCustomer();
+
+        final LoginResponse response = new LoginResponse();
+        response.id(customer.getUuid())
+                .firstName(customer.getFirstName())
+                .lastName(customer.getLastName())
+                .contactNumber(customer.getContactNumber())
+                .emailAddress(customer.getEmail())
+                .message("LOGGED IN SUCCESSFULLY");
+
         HttpHeaders headers = new HttpHeaders();
         headers.add(AppConstants.HTTP_ACCESS_TOKEN_HEADER, customerAuthEntity.getAccessToken());
         headers.setAccessControlExposeHeaders(Collections.singletonList(AppConstants.HTTP_ACCESS_TOKEN_HEADER));

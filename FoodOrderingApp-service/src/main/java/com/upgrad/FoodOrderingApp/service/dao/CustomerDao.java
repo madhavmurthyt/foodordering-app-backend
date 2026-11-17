@@ -81,4 +81,25 @@ public class CustomerDao {
     public CustomerEntity updateCustomer(final CustomerEntity customerEntity) {
         return entityManager.merge(customerEntity);
     }
+
+    public CustomerEntity getCustomerByProviderId(String authProvider, String providerId) {
+        try {
+            return entityManager.createNamedQuery("Customer.ByProviderId", CustomerEntity.class)
+                    .setParameter("authProvider", authProvider)
+                    .setParameter("providerId", providerId)
+                    .getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+    public CustomerEntity getCustomerByEmail(String email) {
+        try {
+            return entityManager.createNamedQuery("Customer.ByEmail", CustomerEntity.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
 }

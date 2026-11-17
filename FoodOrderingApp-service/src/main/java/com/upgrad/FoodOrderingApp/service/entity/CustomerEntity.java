@@ -11,7 +11,9 @@ import java.util.List;
 @Entity
 @Table(name = "customer")
 @NamedQueries({
-    @NamedQuery(name = "Customer.ByContact", query = "SELECT C FROM CustomerEntity C WHERE C.contactNumber = :contactNumber")
+    @NamedQuery(name = "Customer.ByContact", query = "SELECT C FROM CustomerEntity C WHERE C.contactNumber = :contactNumber"),
+    @NamedQuery(name = "Customer.ByProviderId", query = "SELECT c FROM CustomerEntity c WHERE c.authProvider = :authProvider AND c.providerId = :providerId"),
+    @NamedQuery(name = "Customer.ByEmail", query = "SELECT c FROM CustomerEntity c WHERE c.email = :email")
 })
 public class CustomerEntity implements Serializable {
 
@@ -43,22 +45,27 @@ public class CustomerEntity implements Serializable {
 
     @Column(name = "contact_number")
     @Size(max = 30)
-    @NotNull
     private String contactNumber;
 
     @Column(name = "password")
     @Size(max = 255)
-    @NotNull
     @ToStringExclude
     @HashCodeExclude
     private String password;
 
     @Column(name = "salt")
     @Size(max = 255)
-    @NotNull
     @ToStringExclude
     @HashCodeExclude
     private String salt;
+
+    @Column(name = "auth_provider")
+    @Size(max = 20)
+    private String authProvider = "LOCAL";
+
+    @Column(name = "provider_id")
+    @Size(max = 255)
+    private String providerId;
 
     @OneToMany(mappedBy = "customer",
         fetch = FetchType.EAGER)
@@ -126,6 +133,22 @@ public class CustomerEntity implements Serializable {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public String getAuthProvider() {
+        return authProvider;
+    }
+
+    public void setAuthProvider(String authProvider) {
+        this.authProvider = authProvider;
+    }
+
+    public String getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(String providerId) {
+        this.providerId = providerId;
     }
 
     public List<AddressEntity> getAddresses() {

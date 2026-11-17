@@ -9,9 +9,14 @@ import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedExceptio
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
 import com.upgrad.FoodOrderingApp.service.exception.UpdateCustomerException;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.UUID;
 
 import static com.upgrad.FoodOrderingApp.service.common.GenericErrorCode.*;
@@ -31,6 +37,9 @@ public class CustomerService {
 
     @Autowired
     private PasswordCryptographyProvider passwordCryptographyProvider;
+
+    @Value("${google.client-id}")
+    private String googleClientId;
 
     /**
      * Method takes CustomerEntity and stores it on the database
@@ -234,6 +243,71 @@ public class CustomerService {
      * @param contactNumber Customer's contact number
      * @return CustomerEntity with customer information
      */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CustomerAuthEntity authenticateWithGoogle(final String idTokenString) throws AuthenticationFailedException {
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(
+                new NetHttpTransport(), GsonFactory.getDefaultInstance())
+                .setAudience(Collections.singletonList(googleClientId))
+                .build();
+
+        GoogleIdToken idToken;
+        try {
+            idToken = verifier.verify(idTokenString);
+        } catch (Exception e) {
+            throw new AuthenticationFailedException("ATH-004", "Failed to verify Google ID token");
+        }
+
+        if (idToken == null) {
+            throw new AuthenticationFailedException("ATH-004", "Invalid Google ID token");
+        }
+
+        GoogleIdToken.Payload payload = idToken.getPayload();
+        String googleUserId = payload.getSubject();
+        String email = payload.getEmail();
+        String firstName = (String) payload.get("given_name");
+        String lastName = (String) payload.get("family_name");
+
+        if (firstName == null || firstName.isEmpty()) {
+            firstName = (String) payload.get("name");
+            if (firstName == null || firstName.isEmpty()) {
+                firstName = email.split("@")[0];
+            }
+        }
+
+        CustomerEntity customer = customerDao.getCustomerByProviderId("GOOGLE", googleUserId);
+
+        if (customer == null && email != null) {
+            customer = customerDao.getCustomerByEmail(email);
+            if (customer != null) {
+                customer.setAuthProvider("GOOGLE");
+                customer.setProviderId(googleUserId);
+                customerDao.updateCustomer(customer);
+            }
+        }
+
+        if (customer == null) {
+            customer = new CustomerEntity();
+            customer.setUuid(UUID.randomUUID().toString());
+            customer.setFirstName(firstName);
+            customer.setLastName(lastName);
+            customer.setEmail(email);
+            customer.setAuthProvider("GOOGLE");
+            customer.setProviderId(googleUserId);
+            customerDao.saveCustomer(customer);
+        }
+
+        JwtTokenProvider jwtTokenProvider = new JwtTokenProvider(googleClientId);
+        CustomerAuthEntity authEntity = new CustomerAuthEntity();
+        authEntity.setCustomer(customer);
+        authEntity.setUuid(UUID.randomUUID().toString());
+        ZonedDateTime loginAt = ZonedDateTime.now();
+        ZonedDateTime expiresAt = loginAt.plusHours(AppConstants.EIGHT_8);
+        authEntity.setLoginAt(loginAt.toLocalDateTime());
+        authEntity.setExpiresAt(expiresAt.toLocalDateTime());
+        authEntity.setAccessToken(jwtTokenProvider.generateToken(customer.getUuid(), loginAt, expiresAt));
+        return customerDao.saveCustomerAuthentication(authEntity);
+    }
+
     private CustomerEntity getCustomerByContactNumber(final String contactNumber) {
         return customerDao.getCustomerByContactNumber(contactNumber);
     }
