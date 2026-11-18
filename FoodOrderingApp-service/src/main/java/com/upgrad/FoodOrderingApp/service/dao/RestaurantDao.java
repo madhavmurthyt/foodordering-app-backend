@@ -46,4 +46,29 @@ public class RestaurantDao {
             return null;
         }
     }
+
+    public List<RestaurantEntity> getAllRestaurants(int page, int size) {
+        return entityManager.createNamedQuery("Restaurants.fetchAllAdmin", RestaurantEntity.class)
+            .setFirstResult(page * size)
+            .setMaxResults(size)
+            .getResultList();
+    }
+
+    public long countAllRestaurants() {
+        return (Long) entityManager.createNamedQuery("Restaurants.countAll").getSingleResult();
+    }
+
+    public RestaurantEntity getRestaurantByUuid(String uuid) {
+        try {
+            return entityManager.createNamedQuery("Restaurants.getById", RestaurantEntity.class)
+                .setParameter("id", uuid)
+                .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public RestaurantEntity updateRestaurant(RestaurantEntity restaurant) {
+        return entityManager.merge(restaurant);
+    }
 }

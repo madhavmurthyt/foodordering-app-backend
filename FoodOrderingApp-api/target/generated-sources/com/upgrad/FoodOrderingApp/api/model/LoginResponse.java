@@ -18,7 +18,7 @@ import jakarta.annotation.Generated;
  * LoginResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-17T16:30:41.274766+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-18T21:23:33.774255+05:30[Asia/Kolkata]")
 public class LoginResponse {
 
   private String id;
@@ -32,6 +32,8 @@ public class LoginResponse {
   private String emailAddress;
 
   private String contactNumber;
+
+  private String role;
 
   public LoginResponse() {
     super();
@@ -169,6 +171,26 @@ public class LoginResponse {
     this.contactNumber = contactNumber;
   }
 
+  public LoginResponse role(String role) {
+    this.role = role;
+    return this;
+  }
+
+  /**
+   * Role of the customer
+   * @return role
+  */
+  
+  @Schema(name = "role", description = "Role of the customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("role")
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -183,12 +205,13 @@ public class LoginResponse {
         Objects.equals(this.firstName, loginResponse.firstName) &&
         Objects.equals(this.lastName, loginResponse.lastName) &&
         Objects.equals(this.emailAddress, loginResponse.emailAddress) &&
-        Objects.equals(this.contactNumber, loginResponse.contactNumber);
+        Objects.equals(this.contactNumber, loginResponse.contactNumber) &&
+        Objects.equals(this.role, loginResponse.role);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, message, firstName, lastName, emailAddress, contactNumber);
+    return Objects.hash(id, message, firstName, lastName, emailAddress, contactNumber, role);
   }
 
   @Override
@@ -201,6 +224,7 @@ public class LoginResponse {
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
     sb.append("    emailAddress: ").append(toIndentedString(emailAddress)).append("\n");
     sb.append("    contactNumber: ").append(toIndentedString(contactNumber)).append("\n");
+    sb.append("    role: ").append(toIndentedString(role)).append("\n");
     sb.append("}");
     return sb.toString();
   }

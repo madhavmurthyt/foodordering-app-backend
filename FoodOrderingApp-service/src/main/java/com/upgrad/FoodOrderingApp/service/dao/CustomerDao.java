@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
 public class CustomerDao {
@@ -101,5 +102,35 @@ public class CustomerDao {
         } catch (NoResultException nre) {
             return null;
         }
+    }
+
+    public CustomerEntity getCustomerByUuid(String uuid) {
+        try {
+            return entityManager.createQuery(
+                    "SELECT c FROM CustomerEntity c WHERE c.uuid = :uuid", CustomerEntity.class)
+                .setParameter("uuid", uuid)
+                .getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+    public List<CustomerEntity> getAllCustomers(int page, int size) {
+        return entityManager.createQuery(
+                "SELECT c FROM CustomerEntity c ORDER BY c.firstName", CustomerEntity.class)
+            .setFirstResult(page * size)
+            .setMaxResults(size)
+            .getResultList();
+    }
+
+    public long countAllCustomers() {
+        return (Long) entityManager.createQuery("SELECT COUNT(c) FROM CustomerEntity c").getSingleResult();
+    }
+
+    public boolean adminExists() {
+        Long count = (Long) entityManager.createQuery(
+                "SELECT COUNT(c) FROM CustomerEntity c WHERE c.role = 'ADMIN'")
+            .getSingleResult();
+        return count > 0;
     }
 }

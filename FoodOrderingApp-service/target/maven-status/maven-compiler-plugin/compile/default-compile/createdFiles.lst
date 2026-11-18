@@ -24,6 +24,7 @@ com/upgrad/FoodOrderingApp/service/entity/RestaurantEntity.class
 com/upgrad/FoodOrderingApp/service/exception/InvalidRatingException.class
 com/upgrad/FoodOrderingApp/service/common/UnexpectedException.class
 com/upgrad/FoodOrderingApp/service/entity/OrderEntity.class
+com/upgrad/FoodOrderingApp/service/business/RoleGuard.class
 com/upgrad/FoodOrderingApp/service/dao/ItemDao.class
 com/upgrad/FoodOrderingApp/service/entity/OrderItemEntity.class
 com/upgrad/FoodOrderingApp/service/dao/PaymentDao.class
@@ -44,6 +45,7 @@ com/upgrad/FoodOrderingApp/service/entity/CustomerEntity.class
 com/upgrad/FoodOrderingApp/service/dao/CustomerDao.class
 com/upgrad/FoodOrderingApp/service/business/JwtTokenProvider.class
 com/upgrad/FoodOrderingApp/service/exception/PaymentMethodNotFoundException.class
+com/upgrad/FoodOrderingApp/service/business/AdminService.class
 com/upgrad/FoodOrderingApp/service/entity/CustomerAuthEntity.class
 com/upgrad/FoodOrderingApp/service/exception/UpdateCustomerException.class
 com/upgrad/FoodOrderingApp/service/common/GenericErrorCode.class

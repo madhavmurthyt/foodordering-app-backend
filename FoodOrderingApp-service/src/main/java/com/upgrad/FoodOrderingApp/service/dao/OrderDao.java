@@ -53,4 +53,19 @@ public class OrderDao {
             return null;
         }
     }
+
+    public long countAllOrders() {
+        return (Long) entityManager.createQuery("SELECT COUNT(o) FROM OrderEntity o").getSingleResult();
+    }
+
+    public Double sumAllRevenue() {
+        return (Double) entityManager.createQuery("SELECT SUM(o.bill) FROM OrderEntity o").getSingleResult();
+    }
+
+    public List<OrderEntity> getAllOrders(int page, int size) {
+        return entityManager.createQuery("SELECT o FROM OrderEntity o ORDER BY o.date DESC", OrderEntity.class)
+            .setFirstResult(page * size)
+            .setMaxResults(size)
+            .getResultList();
+    }
 }

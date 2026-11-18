@@ -77,7 +77,7 @@ public class OrderController {
                 .date(orderEntity.getDate().toString())
                 .address(new OrderListAddress()
                     .id(UUID.fromString(orderEntity.getAddress().getUuid()))
-                    .flatBuildingName(orderEntity.getAddress().getUuid())
+                    .flatBuildingName(orderEntity.getAddress().getFlatBuilNo())
                     .locality(orderEntity.getAddress().getLocality())
                     .city(orderEntity.getAddress().getCity())
                     .pincode(orderEntity.getAddress().getPincode()));

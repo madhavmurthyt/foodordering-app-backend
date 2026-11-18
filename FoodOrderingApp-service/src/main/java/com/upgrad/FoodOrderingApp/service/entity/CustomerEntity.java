@@ -59,6 +59,10 @@ public class CustomerEntity implements Serializable {
     @HashCodeExclude
     private String salt;
 
+    @Column(name = "role")
+    @Size(max = 20)
+    private String role = "CUSTOMER";
+
     @Column(name = "auth_provider")
     @Size(max = 20)
     private String authProvider = "LOCAL";
@@ -133,6 +137,14 @@ public class CustomerEntity implements Serializable {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getAuthProvider() {

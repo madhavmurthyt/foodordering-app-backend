@@ -1,6 +1,7 @@
 /Users/madhavmurthyt/Projects/food-ordering-app/foodordering-app-backend/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/FoodOrderingAppApiApplication.java
 /Users/madhavmurthyt/Projects/food-ordering-app/foodordering-app-backend/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/config/SwaggerConfiguration.java
 /Users/madhavmurthyt/Projects/food-ordering-app/foodordering-app-backend/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/AddressController.java
+/Users/madhavmurthyt/Projects/food-ordering-app/foodordering-app-backend/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/AdminController.java
 /Users/madhavmurthyt/Projects/food-ordering-app/foodordering-app-backend/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/CategoryController.java
 /Users/madhavmurthyt/Projects/food-ordering-app/foodordering-app-backend/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/CustomerController.java
 /Users/madhavmurthyt/Projects/food-ordering-app/foodordering-app-backend/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/ItemController.java

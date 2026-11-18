@@ -58,4 +58,5 @@ org/openapitools/OpenApiGeneratorApplication.class
 com/upgrad/FoodOrderingApp/api/model/CategoryList.class
 com/upgrad/FoodOrderingApp/api/model/RestaurantDetailsResponseAddress.class
 com/upgrad/FoodOrderingApp/api/model/OrderListPayment.class
+com/upgrad/FoodOrderingApp/api/controller/AdminController.class
 com/upgrad/FoodOrderingApp/api/model/ItemList.class

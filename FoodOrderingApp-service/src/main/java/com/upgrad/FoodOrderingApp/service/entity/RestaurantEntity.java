@@ -14,9 +14,11 @@ import java.util.Set;
 @Entity
 @Table(name = "restaurant")
 @NamedQueries({
-    @NamedQuery(name = "Restaurants.fetchAll", query = "SELECT r FROM RestaurantEntity r ORDER BY r.customerRating DESC"),
-    @NamedQuery(name = "Restaurants.getByName", query = "SELECT r FROM RestaurantEntity r WHERE LOWER(r.restaurantName) LIKE :name ORDER BY r.restaurantName"),
-    @NamedQuery(name = "Restaurants.getById", query = "SELECT r FROM RestaurantEntity r WHERE r.uuid=:id")
+    @NamedQuery(name = "Restaurants.fetchAll", query = "SELECT r FROM RestaurantEntity r WHERE r.status = 'ACTIVE' ORDER BY r.customerRating DESC"),
+    @NamedQuery(name = "Restaurants.getByName", query = "SELECT r FROM RestaurantEntity r WHERE r.status = 'ACTIVE' AND LOWER(r.restaurantName) LIKE :name ORDER BY r.restaurantName"),
+    @NamedQuery(name = "Restaurants.getById", query = "SELECT r FROM RestaurantEntity r WHERE r.uuid=:id"),
+    @NamedQuery(name = "Restaurants.fetchAllAdmin", query = "SELECT r FROM RestaurantEntity r ORDER BY r.restaurantName"),
+    @NamedQuery(name = "Restaurants.countAll", query = "SELECT COUNT(r) FROM RestaurantEntity r")
 })
 public class RestaurantEntity implements Serializable {
     @Id
@@ -52,6 +54,10 @@ public class RestaurantEntity implements Serializable {
     @Column(name = "number_of_customers_rated")
     @NotNull
     private Integer numberOfCustomersRated;
+
+    @Column(name = "status")
+    @Size(max = 20)
+    private String status = "ACTIVE";
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
@@ -129,6 +135,14 @@ public class RestaurantEntity implements Serializable {
 
     public void setNumberCustomersRated(Integer numberOfCustomersRated) {
         this.numberOfCustomersRated = numberOfCustomersRated;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public AddressEntity getAddress() {

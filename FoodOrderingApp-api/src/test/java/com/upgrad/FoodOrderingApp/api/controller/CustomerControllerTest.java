@@ -432,6 +432,7 @@ public class CustomerControllerTest {
 
     //This test case passes when you have handled the exception of trying to update your password but you are already
     // logged out.
+    @Test
     public void shouldUpdateCustomerPasswordIfCustomerIsAlreadyLoggedOut() throws Exception {
         when(mockCustomerService.getCustomer("auth"))
             .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
@@ -449,6 +450,7 @@ public class CustomerControllerTest {
 
     //This test case passes when you have handled the exception of trying to update your password but your session is
     // already expired.
+    @Test
     public void shouldUpdateCustomerPasswordIfSessionIsExpired() throws Exception {
         when(mockCustomerService.getCustomer("auth"))
             .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
@@ -481,6 +483,66 @@ public class CustomerControllerTest {
             .andExpect(jsonPath("code").value("UCR-001"));
         verify(mockCustomerService, times(1)).getCustomer("auth");
         verify(mockCustomerService, times(1)).updateCustomerPassword("oldPwd", "newPwd", customerEntity);
+    }
+
+    // ----------------------------- POST /customer/login (email-based) --------------------------------
+
+    @Test
+    public void shouldLoginWithEmailForValidRequest() throws Exception {
+        final CustomerAuthEntity createdCustomerAuthEntity = new CustomerAuthEntity();
+        createdCustomerAuthEntity.setAccessToken("accessToken");
+        final CustomerEntity customerEntity = new CustomerEntity();
+        final String customerId = UUID.randomUUID().toString();
+        customerEntity.setUuid(customerId);
+        customerEntity.setEmail("user@example.com");
+        customerEntity.setRole("CUSTOMER");
+        createdCustomerAuthEntity.setCustomer(customerEntity);
+
+        when(mockCustomerService.authenticate("user@example.com", "CorrectPassword"))
+            .thenReturn(createdCustomerAuthEntity);
+
+        mockMvc
+            .perform(post("/customer/login")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("authorization", "Basic " + getEncoder().encodeToString("user@example.com:CorrectPassword".getBytes())))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("id").value(customerId))
+            .andExpect(header().exists("access-token"));
+        verify(mockCustomerService, times(1)).authenticate("user@example.com", "CorrectPassword");
+    }
+
+    @Test
+    public void shouldNotLoginWithEmailIfNotRegistered() throws Exception {
+        when(mockCustomerService.authenticate("unknown@example.com", "Password"))
+            .thenThrow(new AuthenticationFailedException("ATH-001", "This contact number does not exist"));
+
+        mockMvc
+            .perform(post("/customer/login")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("authorization", "Basic " + getEncoder().encodeToString("unknown@example.com:Password".getBytes())))
+            .andExpect(status().isUnauthorized())
+            .andExpect(jsonPath("code").value("ATH-001"));
+        verify(mockCustomerService, times(1)).authenticate("unknown@example.com", "Password");
+    }
+
+    @Test
+    public void shouldReturnRoleInLoginResponse() throws Exception {
+        final CustomerAuthEntity createdCustomerAuthEntity = new CustomerAuthEntity();
+        createdCustomerAuthEntity.setAccessToken("accessToken");
+        final CustomerEntity customerEntity = new CustomerEntity();
+        customerEntity.setUuid(UUID.randomUUID().toString());
+        customerEntity.setRole("ADMIN");
+        createdCustomerAuthEntity.setCustomer(customerEntity);
+
+        when(mockCustomerService.authenticate("9090909090", "CorrectPassword"))
+            .thenReturn(createdCustomerAuthEntity);
+
+        mockMvc
+            .perform(post("/customer/login")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("authorization", "Basic " + getEncoder().encodeToString("9090909090:CorrectPassword".getBytes())))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("role").value("ADMIN"));
     }
 
 }

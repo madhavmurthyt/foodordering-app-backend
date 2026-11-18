@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("OrderList_payment")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-17T16:30:41.480823+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-18T21:23:34.052611+05:30[Asia/Kolkata]")
 public class OrderListPayment {
 
   private UUID id;

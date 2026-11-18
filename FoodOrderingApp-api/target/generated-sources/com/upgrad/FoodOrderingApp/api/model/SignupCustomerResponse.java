@@ -18,7 +18,7 @@ import jakarta.annotation.Generated;
  * SignupCustomerResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-17T16:30:41.274766+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-18T21:23:33.774255+05:30[Asia/Kolkata]")
 public class SignupCustomerResponse {
 
   private String id;

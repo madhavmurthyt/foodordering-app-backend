@@ -565,6 +565,10 @@
         "contact_number": {
           "type": "string",
           "description": "Contact Number of the new customer"
+        },
+        "role": {
+          "type": "string",
+          "description": "Role of the customer"
         }
       },
       "required": [

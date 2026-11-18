@@ -60,6 +60,7 @@ public class CustomerController {
         // Map customer & access token to Login response object
         final LoginResponse response = new LoginResponse();
         response.id(customerAuthEntity.getCustomer().getUuid()).firstName(customerAuthEntity.getCustomer().getFirstName()).lastName(customerAuthEntity.getCustomer().getLastName()).contactNumber(customerAuthEntity.getCustomer().getContactNumber()).emailAddress(customerAuthEntity.getCustomer().getEmail()).message("LOGGED IN SUCCESSFULLY");
+        response.setRole(customerAuthEntity.getCustomer().getRole());
 
         // Set Http Headers
         HttpHeaders headers = new HttpHeaders();
@@ -86,6 +87,7 @@ public class CustomerController {
                 .contactNumber(customer.getContactNumber())
                 .emailAddress(customer.getEmail())
                 .message("LOGGED IN SUCCESSFULLY");
+        response.setRole(customer.getRole());
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(AppConstants.HTTP_ACCESS_TOKEN_HEADER, customerAuthEntity.getAccessToken());

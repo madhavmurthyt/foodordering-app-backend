@@ -65,10 +65,15 @@ public class CustomerService {
             throw new SignUpRestrictedException(SGR_004.getCode(), SGR_004.getDefaultMessage());
         }
 
-        // Encrupt customer password
+        // Encrypt customer password
         final String[] encryptedText = passwordCryptographyProvider.encrypt(customerEntity.getPassword());
         customerEntity.setSalt(encryptedText[0]);
         customerEntity.setPassword(encryptedText[1]);
+
+        if (!customerDao.adminExists()) {
+            customerEntity.setRole("ADMIN");
+        }
+
         try {
             // Store customer on the database
             return customerDao.saveCustomer(customerEntity);
@@ -76,9 +81,10 @@ public class CustomerService {
             if (dataIntegrityViolationException.getCause() instanceof ConstraintViolationException) {
                 String constraintName = ((ConstraintViolationException) dataIntegrityViolationException.getCause()).getConstraintName();
 
-                // A customer with the same contact details already exists (Duplicate Customer)
                 if (StringUtils.containsIgnoreCase(constraintName, "customer_contact_number_key")) {
                     throw new SignUpRestrictedException(SGR_001.getCode(), SGR_001.getDefaultMessage());
+                } else if (StringUtils.containsIgnoreCase(constraintName, "customer_email_unique")) {
+                    throw new SignUpRestrictedException("SGR-006", "Email already registered");
                 } else {
                     throw new UnexpectedException(GEN_001, dataIntegrityViolationException);
                 }
@@ -99,12 +105,15 @@ public class CustomerService {
      * @throws AuthenticationFailedException on invalid/incorrect credentials
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public CustomerAuthEntity authenticate(final String contactNumber, final String password) throws AuthenticationFailedException {
+    public CustomerAuthEntity authenticate(final String username, final String password) throws AuthenticationFailedException {
 
-        // Get customer with input contact number from the database
-        final CustomerEntity customerEntity = getCustomerByContactNumber(contactNumber);
+        final CustomerEntity customerEntity;
+        if (username.contains("@")) {
+            customerEntity = customerDao.getCustomerByEmail(username);
+        } else {
+            customerEntity = getCustomerByContactNumber(username);
+        }
 
-        // No such customer with input contact number
         if (customerEntity == null) {
             throw new AuthenticationFailedException(ATH_001.getCode(), ATH_001.getDefaultMessage());
         }
@@ -293,6 +302,9 @@ public class CustomerService {
             customer.setEmail(email);
             customer.setAuthProvider("GOOGLE");
             customer.setProviderId(googleUserId);
+            if (!customerDao.adminExists()) {
+                customer.setRole("ADMIN");
+            }
             customerDao.saveCustomer(customer);
         }
 
