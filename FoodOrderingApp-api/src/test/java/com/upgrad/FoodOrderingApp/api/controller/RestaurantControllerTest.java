@@ -281,7 +281,7 @@ public class RestaurantControllerTest {
             .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
 
         mockMvc
-            .perform(put("/restaurant/someRestaurantId/?customer_rating=4.5")
+            .perform(put("/restaurant/someRestaurantId?customer_rating=4.5")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer invalid_auth"))
             .andExpect(status().isForbidden())
@@ -299,7 +299,7 @@ public class RestaurantControllerTest {
             .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
 
         mockMvc
-            .perform(put("/restaurant/someRestaurantId/?customer_rating=4.5")
+            .perform(put("/restaurant/someRestaurantId?customer_rating=4.5")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer invalid_auth"))
             .andExpect(status().isForbidden())
@@ -317,7 +317,7 @@ public class RestaurantControllerTest {
             .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
 
         mockMvc
-            .perform(put("/restaurant/someRestaurantId/?customer_rating=4.5")
+            .perform(put("/restaurant/someRestaurantId?customer_rating=4.5")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("authorization", "Bearer invalid_auth"))
             .andExpect(status().isForbidden())

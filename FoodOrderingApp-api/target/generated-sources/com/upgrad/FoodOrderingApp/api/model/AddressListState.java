@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("AddressList_state")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-18T21:23:34.152997+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-19T15:55:06.069218+05:30[Asia/Kolkata]")
 public class AddressListState {
 
   private UUID id;
