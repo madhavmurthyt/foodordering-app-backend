@@ -27,4 +27,17 @@ public class ItemDao {
             return null;
         }
     }
+
+    public ItemEntity saveItem(ItemEntity item) {
+        entityManager.persist(item);
+        return item;
+    }
+
+    public ItemEntity updateItem(ItemEntity item) {
+        return entityManager.merge(item);
+    }
+
+    public void deleteItem(ItemEntity item) {
+        entityManager.remove(entityManager.contains(item) ? item : entityManager.merge(item));
+    }
 }

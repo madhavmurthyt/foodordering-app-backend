@@ -59,6 +59,10 @@ public class RestaurantEntity implements Serializable {
     @Size(max = 20)
     private String status = "ACTIVE";
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    private CustomerEntity owner;
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -143,6 +147,14 @@ public class RestaurantEntity implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public CustomerEntity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(CustomerEntity owner) {
+        this.owner = owner;
     }
 
     public AddressEntity getAddress() {

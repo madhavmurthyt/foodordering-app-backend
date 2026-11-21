@@ -18,7 +18,7 @@ import jakarta.annotation.Generated;
  * SaveAddressRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-19T15:55:06.069218+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-21T15:01:33.137582+05:30[Asia/Kolkata]")
 public class SaveAddressRequest {
 
   private String flatBuildingName;

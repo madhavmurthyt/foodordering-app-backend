@@ -71,4 +71,23 @@ public class RestaurantDao {
     public RestaurantEntity updateRestaurant(RestaurantEntity restaurant) {
         return entityManager.merge(restaurant);
     }
+
+    public RestaurantEntity saveRestaurant(RestaurantEntity restaurant) {
+        entityManager.persist(restaurant);
+        return restaurant;
+    }
+
+    public void addRestaurantItem(Integer restaurantId, Integer itemId) {
+        entityManager.createNativeQuery("INSERT INTO restaurant_item (restaurant_id, item_id) VALUES (:rid, :iid)")
+            .setParameter("rid", restaurantId)
+            .setParameter("iid", itemId)
+            .executeUpdate();
+    }
+
+    public void removeRestaurantItem(Integer restaurantId, Integer itemId) {
+        entityManager.createNativeQuery("DELETE FROM restaurant_item WHERE restaurant_id = :rid AND item_id = :iid")
+            .setParameter("rid", restaurantId)
+            .setParameter("iid", itemId)
+            .executeUpdate();
+    }
 }

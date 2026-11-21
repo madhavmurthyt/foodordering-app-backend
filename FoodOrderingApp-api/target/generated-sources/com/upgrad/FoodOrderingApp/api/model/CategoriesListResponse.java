@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * CategoriesListResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-19T15:55:06.112649+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-21T15:01:33.184984+05:30[Asia/Kolkata]")
 public class CategoriesListResponse {
 
   @Valid

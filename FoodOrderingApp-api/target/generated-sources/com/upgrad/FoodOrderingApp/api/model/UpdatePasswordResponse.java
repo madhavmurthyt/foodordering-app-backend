@@ -18,7 +18,7 @@ import jakarta.annotation.Generated;
  * UpdatePasswordResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-19T15:55:05.818410+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-21T15:01:32.751100+05:30[Asia/Kolkata]")
 public class UpdatePasswordResponse {
 
   private String id;

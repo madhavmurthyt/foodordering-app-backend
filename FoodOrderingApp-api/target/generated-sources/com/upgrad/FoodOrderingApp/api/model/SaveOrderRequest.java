@@ -24,7 +24,7 @@ import jakarta.annotation.Generated;
  * SaveOrderRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-19T15:55:06.005050+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-11-21T15:01:33.067527+05:30[Asia/Kolkata]")
 public class SaveOrderRequest {
 
   private String addressId;
