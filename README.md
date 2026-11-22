@@ -1,6 +1,14 @@
 # Food Ordering App — Backend
 
-A Spring Boot REST API for the Food Ordering Application, providing endpoints for customer management, restaurant browsing, ordering, and payments.
+A Spring Boot REST API for the Food Ordering Application, providing endpoints for customer management, restaurant browsing, ordering, admin dashboard, restaurant owner portal, and payments.
+
+## Quick Start
+
+```bash
+./restart.sh
+```
+
+This kills any existing backend on port 8080, rebuilds, and starts the server at `http://localhost:8080/api/`.
 
 ## Prerequisites
 
@@ -54,7 +62,13 @@ mvn clean install -DskipTests
 
 ## Running
 
-Start the API server:
+**Option 1 — Restart script** (recommended):
+```bash
+./restart.sh
+```
+Kills any existing process on port 8080, rebuilds, and starts.
+
+**Option 2 — Manual:**
 ```bash
 cd FoodOrderingApp-api
 mvn spring-boot:run
@@ -85,8 +99,11 @@ foodordering-app-backend/
 
 | Area | Base Path | Key Operations |
 |---|---|---|
-| Customer | `/customer` | signup, login, logout, update profile, change password |
-| Restaurant | `/restaurant` | list all, search by name, filter by category, get details, rate |
+| Customer | `/customer` | signup, login (email or phone), Google SSO, logout, update profile, change password |
+| Restaurant | `/restaurant` | list all (excludes PENDING/SUSPENDED), search by name, filter by category, get details, rate |
+| Admin | `/admin` | dashboard stats, list/create restaurants, manage menu items, user management, role changes, invite links |
+| Owner | `/restaurant` | create restaurant (PENDING), edit own restaurant, manage own menu items, list own restaurants |
+| Invite | `/invite` | validate invite token, claim restaurant ownership |
 | Order | `/order` | place order, get past orders, get coupon |
 | Address | `/address` | save, list, delete addresses; list states |
 | Category | `/category` | list all, get by ID with items |
