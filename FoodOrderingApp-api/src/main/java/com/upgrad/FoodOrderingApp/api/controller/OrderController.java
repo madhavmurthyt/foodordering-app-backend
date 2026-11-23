@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+
+import com.upgrad.FoodOrderingApp.service.dao.OrderDao;
 //Allowsto specify a flexible way what kind of cross domain requests are authorized
 @CrossOrigin
 @RestController
@@ -40,6 +40,15 @@ public class OrderController {
     @Autowired
     private ItemService itemService;
 
+    @Autowired
+    private OrderDao orderDao;
+
+    @Autowired
+    private RoleGuard roleGuard;
+
+    private static final List<String> ORDER_STATUS_FLOW = List.of(
+        "PLACED", "CONFIRMED", "PREPARING", "OUT_FOR_DELIVERY", "DELIVERED"
+    );
 
     /**
      * Method takes customers access token and retrieves a list of all of the customer's orders
@@ -209,5 +218,82 @@ public class OrderController {
         return new ResponseEntity<CouponDetailsResponse>(response, HttpStatus.OK);
     }
 
+    @CrossOrigin
+    @RequestMapping(path = "/{orderUuid}/status", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> getOrderStatus(
+            @RequestHeader("authorization") final String headerParam,
+            @PathVariable("orderUuid") final String orderUuid) throws AuthorizationFailedException {
+
+        final String accessToken = AppUtils.getBearerAuthToken(headerParam);
+        customerService.getCustomer(accessToken);
+
+        OrderEntity order = orderDao.getOrderByUuid(orderUuid);
+        if (order == null) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("code", "ONF-001");
+            error.put("message", "Order not found");
+            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("id", order.getUuid());
+        result.put("status", order.getStatus());
+        result.put("status_updated_at", order.getStatusUpdatedAt() != null ? order.getStatusUpdatedAt().toString() : null);
+        result.put("date", order.getDate().toString());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(path = "/{orderUuid}/status", method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @org.springframework.transaction.annotation.Transactional
+    public ResponseEntity<Map<String, Object>> updateOrderStatus(
+            @RequestHeader("authorization") final String headerParam,
+            @PathVariable("orderUuid") final String orderUuid,
+            @RequestBody Map<String, Object> request) throws AuthorizationFailedException {
+
+        final String accessToken = AppUtils.getBearerAuthToken(headerParam);
+        CustomerEntity customer = customerService.getCustomer(accessToken);
+
+        if (!"ADMIN".equals(customer.getRole()) && !"RESTAURANT_OWNER".equals(customer.getRole())) {
+            throw new AuthorizationFailedException("AUT-001", "You are not authorized to perform this operation");
+        }
+
+        OrderEntity order = orderDao.getOrderByUuid(orderUuid);
+        if (order == null) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("code", "ONF-001");
+            error.put("message", "Order not found");
+            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
+
+        String newStatus = (String) request.get("status");
+        if (newStatus == null || !ORDER_STATUS_FLOW.contains(newStatus)) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("code", "OST-001");
+            error.put("message", "Invalid status. Valid: " + ORDER_STATUS_FLOW);
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+
+        int currentIdx = ORDER_STATUS_FLOW.indexOf(order.getStatus());
+        int newIdx = ORDER_STATUS_FLOW.indexOf(newStatus);
+        if (newIdx <= currentIdx) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("code", "OST-002");
+            error.put("message", "Cannot move status backward. Current: " + order.getStatus());
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+
+        order.setStatus(newStatus);
+        order.setStatusUpdatedAt(LocalDateTime.now());
+        orderDao.updateOrder(order);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("id", order.getUuid());
+        result.put("status", order.getStatus());
+        result.put("status_updated_at", order.getStatusUpdatedAt().toString());
+        result.put("message", "ORDER STATUS UPDATED SUCCESSFULLY");
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
 }

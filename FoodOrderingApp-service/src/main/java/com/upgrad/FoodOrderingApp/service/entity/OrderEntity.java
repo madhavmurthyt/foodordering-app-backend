@@ -19,7 +19,8 @@ import java.util.Set;
 @Table(name = "orders")
 @NamedQueries({
     @NamedQuery(name = "Orders.ByCustomer", query = "SELECT O FROM OrderEntity O WHERE O.customer.uuid = :customerId ORDER BY O.date DESC"),
-    @NamedQuery(name = "fetchOrdersByRestaurant", query = "SELECT o FROM OrderEntity o where o.restaurant =: restaurant")
+    @NamedQuery(name = "fetchOrdersByRestaurant", query = "SELECT o FROM OrderEntity o where o.restaurant =: restaurant"),
+    @NamedQuery(name = "Orders.ByUuid", query = "SELECT o FROM OrderEntity o WHERE o.uuid = :uuid")
 })
 public class OrderEntity implements Serializable {
     @Id
@@ -88,6 +89,13 @@ public class OrderEntity implements Serializable {
     @HashCodeExclude
     @EqualsExclude
     private RestaurantEntity restaurant;
+
+    @Column(name = "status")
+    @Size(max = 30)
+    private String status = "PLACED";
+
+    @Column(name = "status_updated_at")
+    private LocalDateTime statusUpdatedAt;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -197,6 +205,22 @@ public class OrderEntity implements Serializable {
 
     public void setItems(Set<OrderItemEntity> items) {
         this.items = items;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getStatusUpdatedAt() {
+        return statusUpdatedAt;
+    }
+
+    public void setStatusUpdatedAt(LocalDateTime statusUpdatedAt) {
+        this.statusUpdatedAt = statusUpdatedAt;
     }
 
     @Override

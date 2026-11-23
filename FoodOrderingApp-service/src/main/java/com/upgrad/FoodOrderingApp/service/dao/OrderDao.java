@@ -54,6 +54,20 @@ public class OrderDao {
         }
     }
 
+    public OrderEntity getOrderByUuid(String uuid) {
+        try {
+            return entityManager.createNamedQuery("Orders.ByUuid", OrderEntity.class)
+                .setParameter("uuid", uuid)
+                .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public OrderEntity updateOrder(OrderEntity order) {
+        return entityManager.merge(order);
+    }
+
     public long countAllOrders() {
         return (Long) entityManager.createQuery("SELECT COUNT(o) FROM OrderEntity o").getSingleResult();
     }
