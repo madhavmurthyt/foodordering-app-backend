@@ -101,10 +101,11 @@ foodordering-app-backend/
 |---|---|---|
 | Customer | `/customer` | signup, login (email or phone), Google SSO, logout, update profile, change password |
 | Restaurant | `/restaurant` | list all (excludes PENDING/SUSPENDED), search by name, filter by category, get details, rate |
-| Admin | `/admin` | dashboard stats, list/create restaurants, manage menu items, user management, role changes, invite links |
+| Admin | `/admin` | dashboard stats, list/create restaurants, manage menu items, user management, role changes, invite links, bulk CSV import |
 | Owner | `/restaurant` | create restaurant (PENDING), edit own restaurant, manage own menu items, list own restaurants |
 | Invite | `/invite` | validate invite token, claim restaurant ownership |
-| Order | `/order` | place order, get past orders, get coupon |
+| Order | `/order` | place order, get past orders, get coupon, track order status (GET/PUT) |
+| Favorites | `/customer/favorites` | add, remove, list favorite restaurants |
 | Address | `/address` | save, list, delete addresses; list states |
 | Category | `/category` | list all, get by ID with items |
 | Payment | `/payment` | list payment methods |
