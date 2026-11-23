@@ -26,6 +26,17 @@ public class StateDao {
         }
     }
 
+    public StateEntity findStateByName(String name) {
+        try {
+            return entityManager.createQuery(
+                "SELECT s FROM StateEntity s WHERE LOWER(s.stateName) = :name", StateEntity.class)
+                .setParameter("name", name.toLowerCase().trim())
+                .getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
     public List<StateEntity> getAllStates() {
         try {
             List<StateEntity> states = entityManager.createNamedQuery("fetchAllStates", StateEntity.class).getResultList();

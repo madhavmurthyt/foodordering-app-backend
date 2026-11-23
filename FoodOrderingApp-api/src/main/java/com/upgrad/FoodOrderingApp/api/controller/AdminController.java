@@ -3,10 +3,9 @@ package com.upgrad.FoodOrderingApp.api.controller;
 import com.upgrad.FoodOrderingApp.service.business.AdminService;
 import com.upgrad.FoodOrderingApp.service.business.RoleGuard;
 import com.upgrad.FoodOrderingApp.service.common.AppUtils;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
-import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
-import com.upgrad.FoodOrderingApp.service.entity.OrderEntity;
-import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
+import com.upgrad.FoodOrderingApp.service.dao.CategoryDao;
+import com.upgrad.FoodOrderingApp.service.dao.StateDao;
+import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.CustomerNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.ItemNotFoundException;
@@ -16,11 +15,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin
@@ -33,6 +33,12 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private CategoryDao categoryDao;
+
+    @Autowired
+    private StateDao stateDao;
 
     @RequestMapping(method = RequestMethod.GET, path = "/dashboard", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> getDashboard(
@@ -367,5 +373,178 @@ public class AdminController {
         response.put("id", item.getUuid());
         response.put("message", "ITEM DELETED SUCCESSFULLY");
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/restaurants/import",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @org.springframework.transaction.annotation.Transactional
+    public ResponseEntity<Map<String, Object>> importRestaurants(
+            @RequestHeader("authorization") final String headerParam,
+            @RequestParam("file") MultipartFile file) throws AuthorizationFailedException {
+
+        final String accessToken = AppUtils.getBearerAuthToken(headerParam);
+        roleGuard.authorizeRole(accessToken, "ADMIN");
+
+        if (file.isEmpty()) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("code", "IMP-001");
+            error.put("message", "CSV file is empty");
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+
+        List<Map<String, Object>> imported = new ArrayList<>();
+        List<Map<String, Object>> errors = new ArrayList<>();
+        int lineNum = 0;
+
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))) {
+
+            String headerLine = reader.readLine();
+            lineNum++;
+            if (headerLine == null) {
+                Map<String, Object> error = new HashMap<>();
+                error.put("code", "IMP-002");
+                error.put("message", "CSV file has no header row");
+                return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+            }
+
+            String[] headers = headerLine.split(",", -1);
+            Map<String, Integer> colIndex = new HashMap<>();
+            for (int i = 0; i < headers.length; i++) {
+                colIndex.put(headers[i].trim().toLowerCase(), i);
+            }
+
+            if (!colIndex.containsKey("name")) {
+                Map<String, Object> error = new HashMap<>();
+                error.put("code", "IMP-003");
+                error.put("message", "CSV must have a 'name' column");
+                return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+            }
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lineNum++;
+                try {
+                    String[] cols = parseCsvLine(line);
+                    String name = getCol(cols, colIndex, "name");
+                    if (name == null || name.isEmpty()) {
+                        addError(errors, lineNum, "Missing restaurant name");
+                        continue;
+                    }
+
+                    String photoUrl = getCol(cols, colIndex, "photo_url");
+                    String avgPriceStr = getCol(cols, colIndex, "avg_price");
+                    Integer avgPrice = 0;
+                    if (avgPriceStr != null && !avgPriceStr.isEmpty()) {
+                        try { avgPrice = Integer.parseInt(avgPriceStr.trim()); }
+                        catch (NumberFormatException e) { addError(errors, lineNum, "Invalid avg_price: " + avgPriceStr); continue; }
+                    }
+
+                    String flat = getCol(cols, colIndex, "flat_buil_number");
+                    String locality = getCol(cols, colIndex, "locality");
+                    String city = getCol(cols, colIndex, "city");
+                    String pincode = getCol(cols, colIndex, "pincode");
+                    String stateName = getCol(cols, colIndex, "state");
+                    String categoryNames = getCol(cols, colIndex, "category");
+                    String status = getCol(cols, colIndex, "status");
+
+                    String stateUuid = null;
+                    if (stateName != null && !stateName.isEmpty()) {
+                        StateEntity state = stateDao.findStateByName(stateName);
+                        if (state == null) {
+                            addError(errors, lineNum, "Unknown state: " + stateName);
+                            continue;
+                        }
+                        stateUuid = state.getUuid();
+                    }
+
+                    List<String> catUuids = new ArrayList<>();
+                    if (categoryNames != null && !categoryNames.isEmpty()) {
+                        for (String catName : categoryNames.split("\\|")) {
+                            CategoryEntity cat = categoryDao.getCategoryByName(catName.trim());
+                            if (cat == null) {
+                                addError(errors, lineNum, "Unknown category: " + catName.trim());
+                            } else {
+                                catUuids.add(cat.getUuid());
+                            }
+                        }
+                    }
+
+                    RestaurantEntity restaurant = adminService.createRestaurant(
+                            name, photoUrl, avgPrice,
+                            flat != null ? flat : "",
+                            locality != null ? locality : "",
+                            city != null ? city : "",
+                            pincode != null ? pincode : "",
+                            stateUuid != null ? stateUuid : "",
+                            catUuids.isEmpty() ? null : catUuids);
+
+                    if (status != null && !status.isEmpty()
+                            && Set.of("PENDING", "ACTIVE", "SUSPENDED").contains(status.toUpperCase())) {
+                        restaurant.setStatus(status.toUpperCase());
+                    }
+
+                    Map<String, Object> row = new HashMap<>();
+                    row.put("line", lineNum);
+                    row.put("id", restaurant.getUuid());
+                    row.put("restaurant_name", restaurant.getRestaurantName());
+                    row.put("status", restaurant.getStatus());
+                    imported.add(row);
+
+                } catch (Exception e) {
+                    addError(errors, lineNum, e.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("code", "IMP-004");
+            error.put("message", "Failed to read CSV: " + e.getMessage());
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("imported_count", imported.size());
+        response.put("error_count", errors.size());
+        response.put("imported", imported);
+        response.put("errors", errors);
+        response.put("message", imported.size() + " restaurants imported, " + errors.size() + " rows skipped");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    private String getCol(String[] cols, Map<String, Integer> colIndex, String name) {
+        Integer idx = colIndex.get(name);
+        if (idx == null || idx >= cols.length) return null;
+        String val = cols[idx].trim();
+        if (val.startsWith("\"") && val.endsWith("\"")) {
+            val = val.substring(1, val.length() - 1);
+        }
+        return val.isEmpty() ? null : val;
+    }
+
+    private String[] parseCsvLine(String line) {
+        List<String> fields = new ArrayList<>();
+        boolean inQuotes = false;
+        StringBuilder field = new StringBuilder();
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if (c == '"') {
+                inQuotes = !inQuotes;
+            } else if (c == ',' && !inQuotes) {
+                fields.add(field.toString());
+                field = new StringBuilder();
+            } else {
+                field.append(c);
+            }
+        }
+        fields.add(field.toString());
+        return fields.toArray(new String[0]);
+    }
+
+    private void addError(List<Map<String, Object>> errors, int line, String message) {
+        Map<String, Object> err = new HashMap<>();
+        err.put("line", line);
+        err.put("message", message);
+        errors.add(err);
     }
 }

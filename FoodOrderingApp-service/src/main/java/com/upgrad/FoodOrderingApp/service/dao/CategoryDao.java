@@ -50,6 +50,17 @@ public class CategoryDao {
      * @param restaurantEntity RestaurantEntity
      * @return CategoryEntity list
      */
+    public CategoryEntity getCategoryByName(String name) {
+        try {
+            return entityManager.createQuery(
+                "SELECT c FROM CategoryEntity c WHERE LOWER(c.categoryName) = :name", CategoryEntity.class)
+                .setParameter("name", name.toLowerCase().trim())
+                .getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
     public List<CategoryEntity> getCategoriesByRestaurant(RestaurantEntity restaurantEntity) {
         try {
             return entityManager.createNamedQuery("RestaurantCategoryEntity.getCategoryByRestaurant", CategoryEntity.class).setParameter("restaurant", restaurantEntity).getResultList();
