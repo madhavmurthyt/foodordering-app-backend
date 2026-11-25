@@ -1,1 +1,0 @@
-COMMENT ON COLUMN restaurant.status IS 'PENDING | ACTIVE | SUSPENDED';
